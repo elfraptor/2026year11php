@@ -10,7 +10,7 @@ $conn = new mysqli($host, $user, $pass, $db);
 $result = mysqli_query($conn, $query1);
 $conn->close();
 //var_dump($result); // very useful for debugging
-if($result){ // querry runs
+if($result){ // query runs
     if(mysqli_num_rows($result) > 0){
         $output = '<table class="table">';
         $output .=  '<tr>

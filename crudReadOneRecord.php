@@ -2,8 +2,8 @@
 <?php 
 include_once "indexHeader.php";
 ?>
-<h1>Template</h1>     
-<form action="crudReadOneRecordAction.php" method="post">
+<h1>Read One Record</h1>     
+<form action="crudReadOneRecordAction.php" method="post"> <!-- calls crudReadOneRecordAction.php when the form is submitted -->
   <label for="id">ID:</label>
   <input type="number" id="id" name="id"><br><br>
   <input type="submit" value="Submit">
