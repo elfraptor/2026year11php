@@ -1,4 +1,4 @@
-
+<?php include_once "indexHeader.php"; ?>
 <h1>CRUD Read</h1>     
 <!-- Code for Middle Part -->
 <?php 
