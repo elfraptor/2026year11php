@@ -17,3 +17,6 @@ include_once "indexHeader.php";
 </html>
 <!-- create a new record and insert in the users table in the datable yr_test_php-->
 <!-- You will need to create a new page where you have input boxes -->
+<?php
+include_once "indexFooter.php";
+?>
