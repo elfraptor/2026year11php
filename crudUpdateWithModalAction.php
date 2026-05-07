@@ -1,5 +1,5 @@
 <?php include_once "indexHeader.php"; ?>
-<h1>CRUD Read One Record Action Result</h1>
+<h1>CRUD Update With Modal Actiont</h1>
   <!-- Code for Middle Part -->
   <?php
   $id = htmlspecialchars($_POST['id']);
@@ -31,7 +31,6 @@
         <td>'. $row["email"] .'</td>
         <td>'. $row["status"] .'</td>
           <td>
-          // inserts the button code for the modal
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal'. $row["id"] .'" data-bs-whatever="@mdo">Update</button>
             <div class="modal fade" id="updateModal'. $row["id"] .'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog">
