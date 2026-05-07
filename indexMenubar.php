@@ -40,7 +40,8 @@
                  <a class="dropdown-item" href="crudRead.php">Read</a>
                   <a class="dropdown-item" href="crudReadOneRecord.php">Read One Record</a>
                  <a class="dropdown-item" href="crudUpdate.php">Update</a>
-                 <a class="dropdown-item" href="crudUpdateWithModal.php">Update with Modal</a>
+                <a class="dropdown-item" href="crudUpdateWithModal.php">Update With Modal</a>
+                 <a class="dropdown-item" href="crudUpdateAllWithModal.php">Update All With Modal</a>
                 <a class="dropdown-item" href="crudDelete.php">Delete</a>
                 </div>
               </li>
