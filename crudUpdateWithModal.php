@@ -30,22 +30,21 @@
     <td>'. $row["email"] .'</td>
     <td>'. $row["status"] .'</td>
       <td>
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Update</button>
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal'. $row["id"] .'" data-bs-whatever="@mdo">Update</button>
+        <div class="modal fade" id="exampleModal'. $row["id"] .'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
                 <form method="post" action="crudUpdateAction.php">
-                <label for="id">ID</label><br>
-                  <input type="text" id="id" name="id"><br><br>
+                  <input type="hidden" id="id" name="id" value="'. $row["id"] .'"><br><br>
                 <label for="new_name">New First Name:</label><br>
-                  <input type="text" id="new_name" name="new_name"><br><br>
+                  <input type="text" id="new_name" name="new_name" value="'. $row["first_name"] .'"><br><br>
                 <label for="last_name">Last Name:</label><br>
-                  <input type="text" id="last_name" name="last_name"><br><br>
+                  <input type="text" id="last_name" name="last_name" value="'. $row["last_name"] .'"><br><br>
                 <label for="email">Email:</label><br>
-                  <input type="email" id="email" name="email"><br><br>
+                  <input type="email" id="email" name="email" value="'. $row["email"] .'"><br><br>
                 <label for="code">Code:</label><br>
-                  <input type="text" id="code" name="code"><br><br>
+                  <input type="text" id="code" name="code" value="'. $row["code"] .'"><br><br>
                   <input type="submit" value="Update">
                 </form>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
