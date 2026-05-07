@@ -6,9 +6,9 @@ $pass = '';
 $conn=new mysqli($host, $user, $pass, $db);
 date_default_timezone_set('Australia/Melbourne');
 if ($conn->connect_error) {
-    die('Connection failed: ' . $conn->connect_error); // die() stops the script and outputs the msg
-} else {
-    echo ("connection successful. ");
-}
-$conn->close();
-?>
+        die('Connection failed: ' . $conn->connect_error); // die() stops the script and outputs the msg
+    } else {
+        echo ("connection successful. ");
+    }
+    $conn->close();
+    ?>

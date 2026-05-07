@@ -1,8 +1,8 @@
 <?php
-  include_once "indexHeader.php";
-  ?>
-  <h1>CRUD Updater</h1>
-<?php
+include_once "indexHeader.php";
+?>
+<h1>CRUD Updater</h1>
+  <?php
   if($_SERVER["REQUEST_METHOD"] == "POST"){
     $id = trim($_POST['id']);
     $new_name = trim($_POST['new_name']);

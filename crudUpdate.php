@@ -19,6 +19,6 @@ include_once "indexMenubar.php";
   </form>
   <!-- update a record in the users table in the datable yr_test_php-->
   <!-- You will need to create a new page where you have an input box -->
-   <?php
-   include_once "indexFooter.php";
-   ?>
+  <?php
+  include_once "indexFooter.php";
+  ?>

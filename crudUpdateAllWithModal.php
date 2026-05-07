@@ -4,6 +4,7 @@
   <?php
   include_once "crudUpdateAllWithModalAction.php";
   ?>
+  <!-- Create new record button -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crudCreateModal" data-bs-whatever="@mdo">Create New Record</button>
   <div class="modal fade" id="crudCreateModal" tabindex="-1" aria-labelledby="crudCreateModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -18,12 +19,13 @@
             <input type="email" id="email" name="email"><br><br>
           <label for="code">Code:</label><br>
             <input type="text" id="code" name="code"><br><br>
-            <input type="submit" value="Update">
+            <input type="submit" value="Create">
           </form>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>        </div>
-    </div>
-    <?php
-    include_once "indexFooter.php";
-    ?>
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>        </div>
+      </div>
+
+
+    </html>
+    <?php include_once "indexFooter.php";?>

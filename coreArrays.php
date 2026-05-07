@@ -28,26 +28,26 @@ foreach($matrix as $row){
 <!-- Foreach loop (made for array specifically) -->
 <?php
 $fruits=["Apple","Banana","Cherry"];
-    foreach($fruits as $fruit){
-      echo $fruit."<br>";
-    }
+foreach($fruits as $fruit){
+  echo $fruit."<br>";
+}
 ?>
-  <!-- For loop with array-->
-    <?php 
-    $colors=["Red","Green","Blue"];
-    for($i=0;$i<count($colors);$i++){
-      echo $colors[$i]."<br>";
-    }
-    ?>
-  <!-- While loop with array -->
-    <?php
-    $animals=["Dog","Cat","Rabbit"];
-    $i=0;
-    while($i<count($animals)){
-      echo $animals[$i]."<br>";
-      $i++;
-    }
-    ?>
-  <?php
-  include_once "indexFooter.php";
-  ?>
+<!-- For loop with array-->
+<?php
+$colors=["Red","Green","Blue"];
+for($i=0;$i<count($colors);$i++){
+  echo $colors[$i]."<br>";
+}
+?>
+<!-- While loop with array -->
+<?php
+$animals=["Dog","Cat","Rabbit"];
+$i=0;
+while($i<count($animals)){
+  echo $animals[$i]."<br>";
+  $i++;
+}
+?>
+<?php
+include_once "indexFooter.php";
+?>

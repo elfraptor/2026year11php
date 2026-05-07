@@ -1,4 +1,5 @@
 <?php
+//initialises query to select all records from users table where status is 1 (active)
 $query="SELECT * FROM `users` WHERE `status`='1'";
 $conn=new mysqli($host, $user, $pass, $db);
 $result = mysqli_query($conn, $query);
@@ -27,11 +28,12 @@ $output = '<table class="table">'; //$output is a variable that stores as a tabl
   <td>'. $row["email"] .'</td>
   <td>'. $row["status"] .'</td>
     <td>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal'. $row["id"] .'" data-bs-whatever="@mdo">Update</button>
+    // inserts the button code for the modal
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal'. $row["id"] .'" data-bs-whatever="@mdo">Update</button> // names the modal with the id of the record so it is unique for each record
       <div class="modal fade" id="updateModal'. $row["id"] .'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
-<h3>Update Record ID: '. $row["id"] .'</h3>
+          <h3>Update Record ID: '. $row["id"] .'</h3>
             <div class="modal-header">
               <form method="post" action="crudUpdateAction.php">
                 <input type="hidden" id="id" name="id" value="'. $row["id"] .'"><br>
@@ -48,7 +50,7 @@ $output = '<table class="table">'; //$output is a variable that stores as a tabl
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </td>

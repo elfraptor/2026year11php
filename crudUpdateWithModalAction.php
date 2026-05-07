@@ -31,6 +31,7 @@
         <td>'. $row["email"] .'</td>
         <td>'. $row["status"] .'</td>
           <td>
+          // inserts the button code for the modal
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal'. $row["id"] .'" data-bs-whatever="@mdo">Update</button>
             <div class="modal fade" id="updateModal'. $row["id"] .'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog">
