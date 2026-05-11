@@ -1,5 +1,5 @@
 <?php include_once "indexHeader.php"; ?>
-<h1>CRUD Update With Modal</h1>
+<h1>CRUD Update AllWith Modal</h1>
 
   <?php
   include_once "crudUpdateAllWithModalAction.php";

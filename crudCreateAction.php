@@ -5,7 +5,6 @@ include_once "indexHeader.php";
 <h1>CRUD | Create</h1>
 </html>
 <?php
-if(isset($_POST['submit'])){
   $code = trim($_POST['code']);
   $first_name = trim($_POST['first_name']);
   $last_name = trim($_POST['last_name']);
@@ -40,9 +39,9 @@ if(isset($_POST['submit'])){
 
   // close the connection
   mysqli_close($conn);
-}
 ?>
 
+<button onclick="window.location.href='index.php'">Back to Home</button>
 <?php
 include_once "indexFooter.php";
 ?>

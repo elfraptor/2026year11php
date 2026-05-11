@@ -1,0 +1,36 @@
+input{
+    padding: 10px;
+    margin: 5px;
+}
+input[type="submit"]{
+    background-color: #4CAF50;
+    border-radius: 5px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+input[type="submit"]:hover {
+    background-color: #45a04994;
+}
+button.btn.btn-primary {
+    background-color: #6d49ee;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button.btn.btn-primary:hover {
+    background-color: #5a23c8;
+}
+modal-dialog{
+    position: fixed;
+    place-items: center;
+}
+button.btn.btn-secondary {
+    background-color: #e20f0f;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button.btn.btn-secondary:hover {
+    background-color: #c10b0ba9;
+}

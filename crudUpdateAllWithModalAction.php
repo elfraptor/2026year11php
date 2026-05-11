@@ -28,7 +28,7 @@ $output = '<table class="table">'; //$output is a variable that stores as a tabl
   <td>'. $row["email"] .'</td>
   <td>'. $row["status"] .'</td>
     <td>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal'. $row["id"] .'" data-bs-whatever="@mdo">Update</button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal'. $row["id"] .'" data-bs-whatever="@mdo">Edit</button>
       <div class="modal fade" id="updateModal'. $row["id"] .'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -44,9 +44,8 @@ $output = '<table class="table">'; //$output is a variable that stores as a tabl
                 <input type="email" id="email" name="email" value="'. $row["email"] .'"><br>
               <label for="code">Code:</label><br>
                 <input type="text" id="code" name="code" value="'. $row["code"] .'"><br>
-                <input type="submit" value="Update">
+                <input type="submit" value="Submit">
               </form>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
