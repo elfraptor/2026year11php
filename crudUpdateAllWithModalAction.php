@@ -34,6 +34,7 @@ $output = '<table class="table">'; //$output is a variable that stores as a tabl
           <div class="modal-content">
           <h3>Update Record ID: '. $row["id"] .'</h3>
             <div class="modal-header">
+            <div class="modal-body">
               <form method="post" action="crudUpdateAction.php">
                 <input type="hidden" id="id" name="id" value="'. $row["id"] .'"><br>
               <label for="new_name">New First Name:</label><br>
@@ -46,8 +47,8 @@ $output = '<table class="table">'; //$output is a variable that stores as a tabl
                 <input type="text" id="code" name="code" value="'. $row["code"] .'"><br>
                 <input type="submit" value="Submit">
               </form>
+              </div>
             </div>
-
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>

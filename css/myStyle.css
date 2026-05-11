@@ -9,6 +9,9 @@ input[type="submit"]{
     border: none;
     cursor: pointer;
 }
+input{
+    width:100%;
+}
 input[type="submit"]:hover {
     background-color: #45a04994;
 }
@@ -21,10 +24,7 @@ button.btn.btn-primary {
 button.btn.btn-primary:hover {
     background-color: #5a23c8;
 }
-modal-dialog{
-    position: fixed;
-    place-items: center;
-}
+
 button.btn.btn-secondary {
     background-color: #e20f0f;
     color: white;
@@ -33,4 +33,18 @@ button.btn.btn-secondary {
 }
 button.btn.btn-secondary:hover {
     background-color: #c10b0ba9;
+}
+
+modal-header{
+    background-color: #6d49ee;
+    color: white;
+    width:100%;
+    display: flex;
+}
+modal-body{
+    background-color: #f1f1f1;
+    color: black;
+    width:100%;
+    display: flex;
+    flex-direction: column;
 }
