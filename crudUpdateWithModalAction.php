@@ -53,26 +53,27 @@
                   <div class="modal-body">
                   </div>
                   <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>        </div>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                   </div>
                 </div>
               </div>
-            </td>
-          </tr>';
-        }
-      $output .=  "</table>";
-      echo ($output);
-    } else {
-      echo ("No Records found");
-    }
-  }else {
-    echo ("Query returned FALSE");
+            </div>
+          </td>
+        </tr>';
+      }
+    $output .=  "</table>";
+    echo ($output);
+  } else {
+    echo ("No Records found");
   }
-  ?>
-  <?php
+}else {
+  echo ("Query returned FALSE");
+}
+?>
+<?php
 
-  include_once "indexFooter.php";
-  ?>
-  <?php
-  include_once "indexFooter.php";
-  ?>
+include_once "indexFooter.php";
+?>
+<?php
+include_once "indexFooter.php";
+?>
