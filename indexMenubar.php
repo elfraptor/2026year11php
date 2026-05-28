@@ -43,20 +43,13 @@
         <a class="dropdown-item" href="crudUpdateWithModal.php">Update With Modal</a>
         <a class="dropdown-item" href="crudUpdateAllWithModal.php">Update All With Modal</a>
         <a class="dropdown-item" href="crudDelete.php">Delete</a>
+        <a class="dropdown-item" href="fixCodes.php">Fix Codes</a>
         </div>
       </li>
     </ul>
-    <form class="d-flex" role="search" method="post" action="indexLogin.php">
-      <input
-      class="form-control me-2"
-      type="search"
-      name="loginID"
-      placeholder="Login ID"
-      aria-label="Search"
-      />
-      <button class="btn btn-outline-success" type="submit">
+      <a class="btn btn-outline-success" type="submit" href="indexLogin.php">
         Login
-      </button>
+</a>
     </form>
   </div>
 </div>

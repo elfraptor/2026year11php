@@ -44,8 +44,6 @@
                       <input type="text" id="last_name" name="last_name" value="'. $row["last_name"] .'"><br><br>
                     <label for="email">Email:</label><br>
                       <input type="email" id="email" name="email" value="'. $row["email"] .'"><br><br>
-                    <label for="code">Code:</label><br>
-                      <input type="text" id="code" name="code" value="'. $row["code"] .'"><br><br>
                       <input type="submit" value="Update">
                     </form>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

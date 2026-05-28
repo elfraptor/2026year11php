@@ -17,8 +17,6 @@
             <input type="text" id="last_name" name="last_name"><br><br>
           <label for="email">Email:</label><br>
             <input type="email" id="email" name="email"><br><br>
-          <label for="code">Code:</label><br>
-            <input type="text" id="code" name="code"><br><br>
             <input type="submit" value="Create">
           </form>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

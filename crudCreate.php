@@ -4,8 +4,6 @@ include_once "indexHeader.php";
 <html>
 <h1>CRUD|Create</h1>
     <form method="post" action="crudCreateAction.php">
-    <label for="code">Code:</label><br>
-        <input type="text" id="code" name="code"><br>
     <label for="first_name">First name:</label><br>
         <input type="text" id="first_name" name="first_name"><br>
     <label for="last_name">Last name:</label><br>

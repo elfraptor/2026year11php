@@ -5,11 +5,12 @@ include_once "indexHeader.php";
 <h1>CRUD | Create</h1>
 </html>
 <?php
-  $code = trim($_POST['code']);
   $first_name = trim($_POST['first_name']);
   $last_name = trim($_POST['last_name']);
   $email = trim($_POST['email']);
   $status = 1;
+  $baseCode  = strtoupper(substr($lastname, 0, 3));
+  $code = $baseCode . str_pad($existingCount + 1, 3, "0", STR_PAD_LEFT);
 
   // connect to the database
   $conn = mysqli_connect("localhost", "root", "", "yr11_test_db");
