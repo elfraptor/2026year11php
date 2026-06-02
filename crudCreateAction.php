@@ -9,8 +9,8 @@ include_once "indexHeader.php";
   $last_name = trim($_POST['last_name']);
   $email = trim($_POST['email']);
   $status = 1;
-  $baseCode  = strtoupper(substr($lastname, 0, 3));
-  $code = $baseCode . str_pad($existingCount + 1, 3, "0", STR_PAD_LEFT);
+  $baseCode  = strtoupper(substr($last_name, 0, 4));
+  $code = $baseCode . str_pad(1, 4, "0", STR_PAD_LEFT);
 
   // connect to the database
   $conn = mysqli_connect("localhost", "root", "", "yr11_test_db");

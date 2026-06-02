@@ -22,12 +22,10 @@ while($row = mysqli_fetch_array($result)){
   $countStmt->fetch();
   $countStmt->close();
   $code = $baseCode . str_pad($existingCount + 1, 3, "0", STR_PAD_LEFT);
-
-
 }
 }
 }
-echo ('<h3>Codes have been fixed!');
+echo ('<h3>Codes have been fixed!</h3>');
 ?>
 
 <?php

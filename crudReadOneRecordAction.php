@@ -4,7 +4,7 @@
   <?php
   $id = htmlspecialchars($_POST['id']);
   //echo $id;
-  $query1 = "SELECT * FROM users WHERE id=$id";
+  $query1 = "SELECT * FROM `users` WHERE code='$id'";
   //echo ('<br>' . $query1 . '<br>');
   $conn = new mysqli($host, $user, $pass, $db);
   $result = mysqli_query($conn, $query1);
