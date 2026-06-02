@@ -14,7 +14,7 @@ if($result0){
     if(mysqli_num_rows($result0) > 0){
         while($row = mysqli_fetch_array($result0)){
             // 1. Get first 3 characters from last name
-            $first_three = strtoupper(substr($row["last_name"],0,3));
+            $first_three = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '',$row["last_name"]), 0, 3));
             // 2. Generate a random 4-digit number (0000 - 9999) and pad it
             //$randomNumbers = str_pad(random_int(0, 9999), 4, '0', STR_PAD_LEFT); 
             // 2. find highest number instead of random number
