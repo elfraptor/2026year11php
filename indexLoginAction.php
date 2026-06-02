@@ -11,7 +11,12 @@ include_once "indexHeader.php";
     $yay=[];
     $yay = mysqli_fetch_array($result);
     if ($yay){
-        echo $yay['pass'];
+        if ($yay['pass'] == $_POST['user_pass']){
+            echo "<h3>Welcome, " . $yay['first_name'] . " " . $yay['last_name'] . "!</h3>";
+        }
+        else{
+            echo "<h3>Incorrect password.<h3>";
+        }
     }
     else{
         echo "<h3>Please make an account.<h3>";

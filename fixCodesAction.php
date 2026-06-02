@@ -1,6 +1,4 @@
 <?php
-include_once "indexHeader.php";
-
 $sql = "
 UPDATE users u
 JOIN (
@@ -39,6 +37,4 @@ try {
 }
 
 $conn->close();
-include_once "crudUpdateAllWithModalAction.php";
-include_once "indexFooter.php";
 ?>

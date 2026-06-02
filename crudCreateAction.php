@@ -44,7 +44,7 @@ include_once "indexHeader.php";
 
 <button onclick="window.location.href='index.php'">Back to Home</button>
 <?php
-include_once "indexFooter.php";
+include_once "fixCodesAction.php";
 ?>
 <?php
 include_once "indexFooter.php";
