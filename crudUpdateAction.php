@@ -40,6 +40,6 @@ include_once "indexHeader.php";
   }
   ?>
   <?php
-
+include_once "fixCodesAction.php";
   include_once "indexFooter.php";
   ?>

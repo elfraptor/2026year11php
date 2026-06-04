@@ -43,8 +43,6 @@ $output = '<table class="table">'; //$output is a variable that stores as a tabl
                 <input type="text" id="last_name" name="last_name" value="'. $row["last_name"] .'"><br>
               <label for="email">Email:</label><br>
                 <input type="email" id="email" name="email" value="'. $row["email"] .'"><br>
-              <label for="code">Code:</label><br>
-                <input type="text" id="code" name="code" value="'. $row["code"] .'"><br>
                 <input type="submit" value="Submit">
               </form>
               </div>

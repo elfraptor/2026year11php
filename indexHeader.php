@@ -1,4 +1,6 @@
 <?php
+ob_start();
+session_start();
 include_once "indexMenubar.php";
 include_once "connect.php";
 ?>
