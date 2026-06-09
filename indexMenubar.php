@@ -2,7 +2,7 @@
 <header data-bs-theme="dark">
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
-    <a class="navbar-brand" href="#">Carousel</a>
+    <a class="navbar-brand" href="index.php">Carousel</a>
       <button
       class="navbar-toggler"
       type="button"
@@ -46,11 +46,21 @@
         <a class="dropdown-item" href="fixCodes.php">Fix Codes</a>
         </div>
       </li>
+      <?php if (!empty($_SESSION['logged_in'])): ?>
+        <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Payslip</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown01">
+        <a class="dropdown-item" href="payslipShifts.php">Shifts</a>
+        </div>
+      </li>
+      <?php endif; ?>
     </ul>
-      <a class="btn btn-outline-success" type="submit" href="indexLogin.php">
-        Login
-</a>
-    </form>
+      <?php if (!empty($_SESSION['logged_in'])): ?>
+        <span class="navbar-text text-light me-3">Logged in</span>
+        <a class="btn btn-outline-warning" href="indexLogout.php">Sign out</a>
+      <?php else: ?>
+        <a class="btn btn-outline-success" href="indexLogin.php">Login</a>
+      <?php endif; ?>
   </div>
 </div>
 </nav>
