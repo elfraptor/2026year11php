@@ -5,11 +5,11 @@ include_once "indexHeader.php";
 <h1>CRUD | Create</h1>
 </html>
 <?php
-  $first_name = trim($_POST['first_name']);
-  $last_name = trim($_POST['last_name']);
+  $f_name= trim($_POST['f_name']);
+  $l_name = trim($_POST['l_name']);
   $email = trim($_POST['email']);
   $status = 1;
-  $baseCode  = strtoupper(substr($last_name, 0, 4));
+  $baseCode  = strtoupper(substr($l_name, 0, 4));
   $code = $baseCode . str_pad(1, 4, "0", STR_PAD_LEFT);
 
   // connect to the database
@@ -21,11 +21,11 @@ include_once "indexHeader.php";
   }
 
   // insert data into the users table
-  $sql = "INSERT INTO users (code, first_name, last_name, email, status) VALUES (?, ?, ?, ?, ?)";
+  $sql = "INSERT INTO users (code, f_name, l_name, email, status) VALUES (?, ?, ?, ?, ?)";
   $stmt = mysqli_prepare($conn, $sql);
 
   if($stmt){
-    mysqli_stmt_bind_param($stmt, "ssssi", $code, $first_name, $last_name, $email, $status);
+    mysqli_stmt_bind_param($stmt, "ssssi", $code, $f_name, $l_name, $email, $status);
 
     if(mysqli_stmt_execute($stmt)){
       echo "New record created successfully";

@@ -5,8 +5,8 @@ include_once "indexHeader.php";
   <?php
   if($_SERVER["REQUEST_METHOD"] == "POST"){
     $id = trim($_POST['id']);
-    $new_name = trim($_POST['new_name']);
-    $last_name = trim($_POST['last_name']);
+    $f_name = trim($_POST['f_name']);
+    $l_name = trim($_POST['l_name']);
     $email = trim($_POST['email']);
     $code = trim($_POST['code']);
     // connect to the database
@@ -18,11 +18,11 @@ include_once "indexHeader.php";
     }
 
     // update data in the users table using a proper prepared statement
-    $sql = "UPDATE users SET first_name = ?, last_name = ?, email = ?, code = ? WHERE id = ?";
+    $sql = "UPDATE users SET f_name = ?, l_name = ?, email = ?, code = ? WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
 
     if($stmt){
-      mysqli_stmt_bind_param($stmt, "ssssi", $new_name, $last_name, $email, $code, $id);
+      mysqli_stmt_bind_param($stmt, "ssssi", $f_name, $l_name, $email, $code, $id);
 
       if(mysqli_stmt_execute($stmt)){
         echo "Record updated successfully";

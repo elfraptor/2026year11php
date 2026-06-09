@@ -11,10 +11,10 @@
       <div class="modal-content">
         <div class="modal-header">
           <form method="post" action="crudCreateAction.php">
-          <label for="first_name">First Name:</label><br>
-            <input type="text" id="first_name" name="first_name"><br><br>
-          <label for="last_name">Last Name:</label><br>
-            <input type="text" id="last_name" name="last_name"><br><br>
+          <label for="f_name">First Name:</label><br>
+            <input type="text" id="f_name" name="f_name"><br><br>
+          <label for="l_name">Last Name:</label><br>
+            <input type="text" id="l_name" name="l_name"><br><br>
           <label for="email">Email:</label><br>
             <input type="email" id="email" name="email"><br><br>
             <input type="submit" value="Create">

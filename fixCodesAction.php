@@ -6,7 +6,7 @@ JOIN (
         id,
         UPPER(
             SUBSTRING(
-                REGEXP_REPLACE(last_name, '[^A-Za-z0-9]', ''),
+                REGEXP_REPLACE(l_name, '[^A-Za-z0-9]', ''),
                 1,
                 3
             )
@@ -14,7 +14,7 @@ JOIN (
         ROW_NUMBER() OVER (
             PARTITION BY UPPER(
                 SUBSTRING(
-                    REGEXP_REPLACE(last_name, '[^A-Za-z0-9]', ''),
+                    REGEXP_REPLACE(l_name, '[^A-Za-z0-9]', ''),
                     1,
                     3
                 )

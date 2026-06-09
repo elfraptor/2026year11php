@@ -4,10 +4,10 @@ include_once "indexHeader.php";
 <html>
 <h1>CRUD|Create</h1>
     <form method="post" action="crudCreateAction.php">
-    <label for="first_name">First name:</label><br>
-        <input type="text" id="first_name" name="first_name"><br>
-    <label for="last_name">Last name:</label><br>
-        <input type="text" id="last_name" name="last_name"><br>
+    <label for="f_name">First name:</label><br>
+        <input type="text" id="f_name" name="f_name"><br>
+    <label for="l_name">Last name:</label><br>
+        <input type="text" id="l_name" name="l_name"><br>
     <label for="email">Email:</label><br>
         <input type="email" id="email" name="email"><br>
         <input type="submit" name="submit" value="Submit">

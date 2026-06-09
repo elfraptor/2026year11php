@@ -7,10 +7,10 @@ include_once "indexMenubar.php";
   <form method="post" action="crudUpdateAction.php">
   <label for="id">ID</label><br>
     <input type="text" id="id" name="id"><br><br>
-  <label for="new_name">New First Name:</label><br>
-    <input type="text" id="new_name" name="new_name"><br><br>
-  <label for="last_name">Last Name:</label><br>
-    <input type="text" id="last_name" name="last_name"><br><br>
+  <label for="f_name">First Name:</label><br>
+    <input type="text" id="f_name" name="f_name"><br><br>
+  <label for="l_name">Last Name:</label><br>
+    <input type="text" id="l_name" name="l_name"><br><br>
   <label for="email">Email:</label><br>
     <input type="email" id="email" name="email"><br><br>
   <label for="code">Code:</label><br>

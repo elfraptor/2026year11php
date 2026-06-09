@@ -28,8 +28,8 @@ include_once "indexHeader.php";
         $output .=  '<tr>
         <td>'. $row["id"] .'</td>
         <td>'. $row["code"] .'</td>
-        <td>'. $row["first_name"] .'</td>
-        <td>'. $row["last_name"] .'</td>
+        <td>'. $row["f_name"] .'</td>
+        <td>'. $row["l_name"] .'</td>
         <td>'. $row["email"] .'</td>
         <td>'. $row["status"] .'</td>
         </tr>';

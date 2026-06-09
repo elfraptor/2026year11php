@@ -15,7 +15,7 @@ if ($code === '' || $enteredPassword === '') {
         die('Connection failed: ' . $conn->connect_error);
     }
 
-    $stmt = $conn->prepare('SELECT id, code, first_name, last_name, pass FROM users WHERE code = ? LIMIT 1');
+    $stmt = $conn->prepare('SELECT id, code, f_name, l_name, pass FROM users WHERE code = ? LIMIT 1');
 
     if ($stmt) {
         $stmt->bind_param('s', $code);
@@ -27,8 +27,8 @@ if ($code === '' || $enteredPassword === '') {
             $_SESSION['logged_in'] = true;
             $_SESSION['user_id'] = $userRow['id'];
             $_SESSION['user_code'] = $userRow['code'];
-            $_SESSION['first_name'] = $userRow['first_name'];
-            $_SESSION['last_name'] = $userRow['last_name'];
+            $_SESSION['f_name'] = $userRow['f_name'];
+            $_SESSION['l_name'] = $userRow['l_name'];
 
             $stmt->close();
             $conn->close();
