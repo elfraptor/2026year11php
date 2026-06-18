@@ -43,6 +43,7 @@ if ($code === '' || $enteredPassword === '') {
     $conn->close();
 
     echo "<h3>Incorrect user code or password.</h3>";
+    echo "<a href='indexLogin.php' class='btn btn-primary'>Try Again</a>";
 }
 ?>
 <?php

@@ -39,7 +39,6 @@ include_once "indexHeader.php";
   }
 
   // close the connection
-  mysqli_close($conn);
 ?>
 
 <button onclick="window.location.href='index.php'">Back to Home</button>

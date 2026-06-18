@@ -56,7 +56,7 @@
       <?php endif; ?>
     </ul>
       <?php if (!empty($_SESSION['logged_in'])): ?>
-        <span class="navbar-text text-light me-3">Logged in</span>
+        <span class="navbar-text text-light me-3">Logged in as <?php echo htmlspecialchars($_SESSION['f_name'] ?? ''); ?></span>
         <a class="btn btn-outline-warning" href="indexLogout.php">Sign out</a>
       <?php else: ?>
         <a class="btn btn-outline-success" href="indexLogin.php">Login</a>

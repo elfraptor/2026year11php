@@ -6,7 +6,8 @@ include_once "indexHeader.php";
     <br>
 <h1>Login</h1>
 </html>
-<div class="col-md-3 col-sm-3 mt-3">
+
+<div class="input-box">
             <br>
             <!-- login fields  -->
             <form class="form-signin" action="indexLoginAction.php" method="post" onsubmit="indexLoginAction.php">
