@@ -46,7 +46,7 @@
         <a class="dropdown-item" href="fixCodes.php">Fix Codes</a>
         </div>
       </li>
-      <?php if (!empty($_SESSION['logged_in'])): ?>
+      <?php if ($_SESSION['logged_in']): ?>
         <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Payslip</a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -55,7 +55,7 @@
       </li>
       <?php endif; ?>
     </ul>
-      <?php if (!empty($_SESSION['logged_in'])): ?>
+      <?php if ($_SESSION['logged_in']): ?>
         <span class="navbar-text text-light me-3">Logged in as <?php echo htmlspecialchars($_SESSION['f_name'] ?? ''); ?></span>
         <a class="btn btn-outline-warning" href="indexLogout.php">Sign out</a>
       <?php else: ?>

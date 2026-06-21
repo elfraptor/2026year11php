@@ -3,6 +3,9 @@ ob_start();
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+if (empty($_SESSION['logged_in'])) {
+    $_SESSION['logged_in'] = false;
+}
 include_once "indexMenubar.php";
 include_once "connect.php";
 ?>

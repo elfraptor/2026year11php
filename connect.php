@@ -1,4 +1,5 @@
 <?php
+
 $host = 'localhost';
 $db = 'yr11_test_db';
 $user = 'root';
