@@ -14,3 +14,4 @@ session_destroy();
 
 header('Location: indexLogin.php');
 exit;
+?>

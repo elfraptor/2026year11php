@@ -1,14 +1,13 @@
 <?php
 include_once "indexHeader.php";
 ?>
-<html>
 <?php
 $code = trim($_POST['user_code'] ?? '');
 $enteredPassword = $_POST['user_pass'] ?? '';
 
 if ($code === '' || $enteredPassword === '') {
     echo "<h3>Please enter both a user code and password.</h3>";
-} else {
+} else{
     $conn = new mysqli($host, $user, $pass, $db);
 
     if ($conn->connect_error) {

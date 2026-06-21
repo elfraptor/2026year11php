@@ -21,9 +21,10 @@
           </form>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>        </div>
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
+    </div>
 
 
-    </html>
-    <?php include_once "indexFooter.php";?>
+  </html>
+  <?php include_once "indexFooter.php";?>

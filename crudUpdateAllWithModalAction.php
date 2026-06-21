@@ -34,17 +34,17 @@ $output = '<table class="table">'; //$output is a variable that stores as a tabl
           <div class="modal-content">
           <h3>Update Record ID: '. $row["id"] .'</h3>
             <div class="modal-header">
-            <div class="modal-body">
-              <form method="post" action="crudUpdateAction.php">
-                <input type="hidden" id="id" name="id" value="'. $row["id"] .'"><br>
-              <label for="f_name">First Name:</label><br>
-                <input type="text" id="f_name" name="f_name" value="'. $row["f_name"] .'"><br>
-              <label for="l_name">Last Name:</label><br>
-                <input type="text" id="l_name" name="l_name" value="'. $row["l_name"] .'"><br>
-              <label for="email">Email:</label><br>
-                <input type="email" id="email" name="email" value="'. $row["email"] .'"><br>
-                <input type="submit" value="Submit">
-              </form>
+              <div class="modal-body">
+                <form method="post" action="crudUpdateAction.php">
+                  <input type="hidden" id="id" name="id" value="'. $row["id"] .'"><br>
+                <label for="f_name">First Name:</label><br>
+                  <input type="text" id="f_name" name="f_name" value="'. $row["f_name"] .'"><br>
+                <label for="l_name">Last Name:</label><br>
+                  <input type="text" id="l_name" name="l_name" value="'. $row["l_name"] .'"><br>
+                <label for="email">Email:</label><br>
+                  <input type="email" id="email" name="email" value="'. $row["email"] .'"><br>
+                  <input type="submit" value="Submit">
+                </form>
               </div>
             </div>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

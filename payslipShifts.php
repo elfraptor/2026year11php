@@ -11,7 +11,7 @@ if (empty($_SESSION['logged_in'])) {
 include_once "indexHeader.php";
 ?>
 <html>
-<h1>Title</h1>
+<h1>This is the Payslip Shifts Page</h1>
 </html>
 <?php
 include_once "indexFooter.php";
