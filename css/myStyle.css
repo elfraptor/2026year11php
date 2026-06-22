@@ -55,12 +55,19 @@ div.input-box{
     font-size: 100%;
     float: left;
     padding: 5px;
-    border: 1px solid #ccc;
     border-radius: 25px;
-    width: 50%;
+    width: 100%;
 }
 form.form-signin{
     width: 100%;
     padding: 10px;
     margin: auto;
+}
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
 }

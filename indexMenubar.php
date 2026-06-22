@@ -47,7 +47,7 @@
         </div>
       </li>
       <?php if ($_SESSION['logged_in']): ?>
-        <li class="nav-item dropdown">
+      <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Payslip</a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
         <a class="dropdown-item" href="payslipShifts.php">Shifts</a>
@@ -55,13 +55,52 @@
       </li>
       <?php endif; ?>
     </ul>
-      <?php if ($_SESSION['logged_in']): ?>
-        <span class="navbar-text text-light me-3">Logged in as <?php echo htmlspecialchars($_SESSION['f_name'] ?? ''); ?></span>
-        <a class="btn btn-outline-warning" href="indexLogout.php">Sign out</a>
-      <?php else: ?>
-        <a class="btn btn-outline-success" href="indexLogin.php">Login</a>
-      <?php endif; ?>
+    <?php if ($_SESSION['logged_in']): ?>
+  <span class="navbar-text text-light me-3">Logged in as <?php echo htmlspecialchars($_SESSION['f_name'] ?? ''); ?></span>
+  <a class="btn btn-outline-warning" href="indexLogout.php">Sign out</a>
+    <?php else: ?>
+
+  <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modalLogin" data-bs-whatever="@mdo">Login</button>
+    <?php endif; ?>
   </div>
 </div>
 </nav>
 </header>
+
+<?php if (!$_SESSION['logged_in']): ?>
+<div class="modal fade" id="modalLogin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      <h3 class="modal-title" id="exampleModalLabel">Login</h3>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="input-box">
+          <br>
+          <!-- login fields  -->
+          <form class="form-signin" action="indexLoginAction.php" method="post">
+            <!-- input fields for loginID -->
+            <div class="form-floating">
+              <input name="user_code" id="user_code" type="text" class="form-control" autofocus="">
+            <label for="user_code">User Code</label>
+            </div>
+            <br>
+            <div class="form-floating">
+              <input name="user_pass" id="user_pass" type="password" class="form-control" placeholder="Password">
+            <label for="user_pass">Password</label>
+            </div>
+            <br>
+          <button name="myButton" class="btn btn-outline-success" type="submit">Sign in</button>
+
+          </form>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<?php endif; ?>

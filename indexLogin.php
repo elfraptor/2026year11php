@@ -10,10 +10,10 @@ include_once "indexHeader.php";
 <div class="input-box">
             <br>
             <!-- login fields  -->
-            <form class="form-signin" action="indexLoginAction.php" method="post" onsubmit="indexLoginAction.php">
+            <form class="form-signin" action="indexLoginAction.php" method="post">
                 <!-- input fields for loginID -->
                 <div class="form-floating">
-                    <input name="user_code" id="user_code" type="test" class="form-control" autofocus="">
+                    <input name="user_code" id="user_code" type="text" class="form-control" autofocus="">
                     <label for="user_code">User Code</label>
                 </div>
                 <br>
