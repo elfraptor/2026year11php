@@ -71,3 +71,7 @@ form.form-signin{
     text-align: center;
     width: 100%;
 }
+.table-container {
+    max-height: 500px;
+    overflow-y: auto;
+}
