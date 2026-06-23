@@ -19,6 +19,7 @@ $user_code= trim($_POST['user_code']);
   $start_time = trim($_POST['start_time']);
   $end_time = trim($_POST['end_time']);
   $breaks = floatval(trim($_POST['breaks']));
+  $rate = floatval(trim($_POST['rate']));
   $laundry = floatval(trim($_POST['laundry']));
   $uniform = floatval(trim($_POST['uniform']));
   $fringe = floatval(trim($_POST['fringe']));
@@ -33,15 +34,15 @@ $user_code= trim($_POST['user_code']);
   }
 
   // insert data into the shifts table
-  $sql = "INSERT INTO shift_records (user_code, date, s_time, e_time, break, l_allowance, u_allowance, fringe, tax) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  $sql = "UPDATE shift_records SET user_code=?, date=?, s_time=?, e_time=?, break=?, rate=?, l_allowance=?, u_allowance=?, fringe=?, tax=? WHERE user_code=? AND date=?";
   $stmt = mysqli_prepare($conn, $sql);
 
   if($stmt){
     // types: user_code (s), date (s), start_time (s), end_time (s), then five floats (d)
-    mysqli_stmt_bind_param($stmt, "ssssddddd", $user_code, $date, $start_time, $end_time, $breaks, $laundry, $uniform, $fringe, $tax);
+    mysqli_stmt_bind_param($stmt, "ssssddddddss", $user_code, $date, $start_time, $end_time, $breaks, $rate, $laundry, $uniform, $fringe, $tax, $user_code, $date);
 
     if(mysqli_stmt_execute($stmt)){
-      echo "New record created successfully";
+      echo "Record updated successfully";
     }else{
       echo "Error: " . mysqli_stmt_error($stmt);
     }
@@ -50,5 +51,9 @@ $user_code= trim($_POST['user_code']);
   } else {
     echo "Error preparing statement: " . mysqli_error($conn);
   }
+  ?>
+  <br>
+  <a href="payslipShifts.php" class="btn btn-secondary">Back to shifts</a>
+  <?php
 include_once "indexFooter.php";
 ?>

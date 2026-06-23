@@ -17,6 +17,7 @@ if (session_status() === PHP_SESSION_NONE) {
         SELECT *
         FROM shift_types
         WHERE user_code = '" . $_SESSION['user_code'] . "'
+        AND status = '1'
         ");
 
         /* Shift Records */
@@ -24,6 +25,7 @@ if (session_status() === PHP_SESSION_NONE) {
         SELECT *
         FROM shift_records
         WHERE user_code = '" . $_SESSION['user_code'] . "'
+        AND status = '1'
         ");
 
         $conn->close();
@@ -126,7 +128,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                         </div>
 
                                         <div class="modal-body">
-                                            <form method="post" action="payslipShiftsAction.php">
+                                            <form method="post" action="payslipCreateShiftAction.php">
 
                                                 <div class="mb-2">
                                                     <input type="hidden" name="user_code" value="<?= htmlspecialchars($_SESSION['user_code']) ?>">
@@ -151,6 +153,11 @@ if (session_status() === PHP_SESSION_NONE) {
                                                     <input type="number" name="breaks" class="form-control">
                                                 </div>
                                                 <div class="mb-2">
+                                                <label>Rate</label>
+                                                    <input type="float" name="rate" class="form-control">
+                                                </div>
+
+                                                <div class="mb-2">
                                                 <label>Laundry Allowance</label>
                                                     <input type="float" name="laundry" class="form-control">
                                                 </div>
@@ -165,7 +172,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                                 <div class="mb-2">
                                                 <label>Tax</label>
                                                     <input type="float" name="tax" class="form-control">
-										</div>
+                                                </div>
 
                                                 <button type="submit" class="btn btn-primary w-100">
                                                     Create
@@ -213,33 +220,112 @@ if (session_status() === PHP_SESSION_NONE) {
                                         <td><?= htmlspecialchars($row['tax']) ?></td>
 
                                             <td>
-                                            <button class="btn btn-sm btn-warning">Edit</button>
-                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                                <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editShiftModal-<?= $row['id'] ?>">Edit</button>
+                                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteShiftModal-<?= $row['id'] ?>">Delete</button>
                                             </td>
                                         </tr>
-                                        <?php endwhile; ?>
-                                        <?php else: ?>
-                                        <tr>
-                                            <td colspan="10" class="text-center">
-                                                No shifts found.
-                                            </td>
-                                        </tr>
-                                        <?php endif; ?>
-                                    </tbody>
 
-                                </table>
+                                        <div class="modal fade" id="editShiftModal-<?= $row['id'] ?>" tabindex="-1" aria-labelledby="editShiftModalLabel-<?= $row['id'] ?>" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="editShiftModalLabel-<?= $row['id'] ?>">Edit Shift</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <form method="post" action="payslipUpdateShiftAction.php">
+                                                        <div class="modal-body">
+                                                            <input type="hidden" name="user_code" value="<?= $_SESSION['user_code'] ?>">
+                                                            <div class="mb-2">
+                                                                <label>Date</label>
+                                                                <input type="date" name="date" class="form-control" value="<?= $row['date'] ?>">
+                                                            </div>
+                                                            <div class="mb-2">
+                                                                <label>Start Time</label>
+                                                                <input type="time" name="start_time" class="form-control" value="<?= $row['s_time'] ?>">
+                                                            </div>
+                                                            <div class="mb-2">
+                                                                <label>End Time</label>
+                                                                <input type="time" name="end_time" class="form-control" value="<?= $row['e_time'] ?>">
+                                                            </div>
+                                                            <div class="mb-2">
+                                                                <label>Breaks (minutes)</label>
+                                                                <input type="number" name="breaks" class="form-control" value="<?= $row['break'] ?>">
+                                                            </div>
+                                                            <div class="mb-2">
+                                                                <label>Rate</label>
+                                                                <input type="float" name="rate" class="form-control" value="<?= htmlspecialchars($row['rate']) ?>">
+                                                            </div>
+                                                            <div class="mb-2">
+                                                                <label>Laundry Allowance</label>
+                                                                <input type="number" step="0.01" name="laundry" class="form-control" value="<?= htmlspecialchars($row['l_allowance']) ?>">
+                                                            </div>
+                                                            <div class="mb-2">
+                                                                <label>Uniform Allowance</label>
+                                                                <input type="number" step="0.01" name="uniform" class="form-control" value="<?= htmlspecialchars($row['u_allowance']) ?>">
+                                                            </div>
+                                                            <div class="mb-2">
+                                                                <label>Fringe</label>
+                                                                <input type="number" step="0.01" name="fringe" class="form-control" value="<?= htmlspecialchars($row['fringe']) ?>">
+                                                            </div>
+                                                            <div class="mb-2">
+                                                                <label>Tax</label>
+                                                                <input type="number" step="0.01" name="tax" class="form-control" value="<?= htmlspecialchars($row['tax']) ?>">
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-primary w-100">Update</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal fade" id="deleteShiftModal-<?= $row['id'] ?>" tabindex="-1" aria-labelledby="deleteShiftModalLabel-<?= $row['id'] ?>" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="deleteShiftModalLabel-<?= $row['id'] ?>">Delete Shift</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <form method="post" action="payslipDeleteShiftAction.php">
+                                                        <div class="modal-body">
+                                                            <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                                                            <label>Are you sure you want to delete this shift? This cannot be undone.</label>
+                                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            
+                                                        </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                                    <?php endwhile; ?>
+                                                    <?php else: ?>
+                                                    <tr>
+                                                        <td colspan="10" class="text-center">
+                                                            No shifts found.
+                                                        </td>
+                                                    </tr>
+                                                    <?php endif; ?>
+                                                </tbody>
+
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
 
                             </div>
 
                         </div>
-
                     </div>
 
                 </div>
 
-            </div>
-        </div>
-
-    </div>
-
-    <?php include_once "indexFooter.php"; ?>
+                <?php include_once "indexFooter.php"; ?>
