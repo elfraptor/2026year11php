@@ -7,6 +7,26 @@ $enteredPassword = $_POST['user_pass'] ?? '';
 
 if ($code === '' || $enteredPassword === '') {
     echo "<h3>Please enter both a user code and password.</h3>";
+    echo '<div class="input-box">
+            <br>
+            <!-- login fields  -->
+            <form class="form-signin" action="indexLoginAction.php" method="post">
+                <!-- input fields for loginID -->
+                <div class="form-floating">
+                    <input name="user_code" id="user_code" type="text" class="form-control" autofocus="">
+                    <label for="user_code">User Code</label>
+                </div>
+                <br>
+                <div class="form-floating">
+                    <input name="user_pass" id="user_pass" type="password" class="form-control" placeholder="Password">
+                    <label for="user_pass">Password</label>
+                </div>
+                <br>
+                <button name="myButton" class="btn btn-submit full" type="submit">Sign in</button>
+
+            </form>
+
+        </div>';
 } else{
     $conn = new mysqli($host, $user, $pass, $db);
 
@@ -42,7 +62,26 @@ if ($code === '' || $enteredPassword === '') {
     $conn->close();
 
     echo "<h3>Incorrect user code or password.</h3>";
-    echo "<a href='indexLogin.php' class='btn btn-primary'>Try Again</a>";
+    echo '<div class="input-box">
+            <br>
+            <!-- login fields  -->
+            <form class="form-signin" action="indexLoginAction.php" method="post">
+                <!-- input fields for loginID -->
+                <div class="form-floating">
+                    <input name="user_code" id="user_code" type="text" class="form-control" autofocus="">
+                    <label for="user_code">User Code</label>
+                </div>
+                <br>
+                <div class="form-floating">
+                    <input name="user_pass" id="user_pass" type="password" class="form-control" placeholder="Password">
+                    <label for="user_pass">Password</label>
+                </div>
+                <br>
+                <button name="myButton" class="btn btn-submit full" type="submit">Sign in</button>
+
+            </form>
+
+        </div>';
 }
 ?>
 <?php

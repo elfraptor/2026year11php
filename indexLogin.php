@@ -22,7 +22,7 @@ include_once "indexHeader.php";
                     <label for="user_pass">Password</label>
                 </div>
                 <br>
-                <button name="myButton" class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+                <button name="myButton" class="btn btn-submit full" type="submit">Sign in</button>
 
             </form>
 

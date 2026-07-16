@@ -124,10 +124,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                 <h4 class="mb-0">Shifts</h4>
 
                                     <div>
-                                        <button class="btn btn-outline-success" type="submit"data-bs-toggle="modal" data-bs-target="#addShiftModal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
-                                            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
-                                        </svg></button>
+                                        <button class="btn btn-outline-success" type="submit"data-bs-toggle="modal" data-bs-target="#addShiftModal">Add Shift</button>
                                     </div>
                                 </div>
 
@@ -153,7 +150,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                                         <input type="date" name="end_date" class="form-control">
                                                     </div>
                                                     <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-primary w-100">Generate Payslip</button>
+                                                    <button type="submit" class="btn btn-submit full">Generate Payslip</button>
                                                     </div>
                                                 </form>
 
@@ -225,7 +222,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                <button type="submit" class="btn btn-submit full">Create</button>
+                                                <button type="submit" class="btn btn-submit full">Add Shift</button>
                                                 </div>
                                             </form>
 
@@ -309,8 +306,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                             .'<form method="post" action="payslipDeleteShiftAction.php"><div class="modal-body">'
                                                                                 .'<input type="hidden" name="id" value="'.htmlspecialchars($row['id']).'">'
                                                                             .'<p>Are you sure you want to delete this shift? This cannot be undone.</p>'
-                                                                            .'<button type="submit" class="btn btn-danger">Delete</button></div>'
-                                                                            .'<div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div></form></div></div></div>';
+                                                                            
+                                                                            .'<div class="modal-footer"><button type="submit" class="btn btn-danger full">Delete</button></div></div></form></div></div></div>';
 
                                                                             endwhile;
                                                                             else: ?>
