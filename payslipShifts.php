@@ -20,6 +20,13 @@ if (session_status() === PHP_SESSION_NONE) {
         AND status = '1'
         ");
 
+        $shift_type_rows = [];
+        if ($shift_types) {
+            while ($shift_type = $shift_types->fetch_assoc()) {
+                $shift_type_rows[] = $shift_type;
+            }
+        }
+
         /* Shift Records */
         $shift_records = $conn->query("
         SELECT *
@@ -61,47 +68,111 @@ if (session_status() === PHP_SESSION_NONE) {
 
                             <h6 class="mb-3">Fixed Rates</h6>
 
+                                <div class="modal fade" id="createShiftTypeModal" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h5 class="modal-title">Create Shift Type</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+
+                                            <form method="post" action="payslipCreateShiftType.php">
+                                                <div class="modal-body">
+                                                    <input type="hidden" name="user_code" value="<?= htmlspecialchars($_SESSION['user_code']) ?>">
+
+                                                    <div class="mb-3">
+                                                    <label class="form-label">Shift Type Name</label>
+                                                        <input class="form-control" type="text" name="shift_name" placeholder="Enter shift type name" aria-label="Shift Type Name">
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Rate</label>
+                                                            <input class="form-control" type="number" name="rate" step="0.01" placeholder="0.00" aria-label="Rate">
+                                                        </div>
+                                                        <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Deductable</label>
+                                                            <input class="form-control" type="number" name="deductable" step="0.01" placeholder="0.00" aria-label="Deductable">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Laundry Allowance</label>
+                                                            <input class="form-control" name="l_allow" type="number" step="0.01" placeholder="0.00" aria-label="Laundry Allowance">
+                                                        </div>
+
+                                                        <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Uniform Allowance</label>
+                                                            <input class="form-control" name="u_allow" type="number" step="0.01" placeholder="0.00" aria-label="Uniform Allowance">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Fringe</label>
+                                                            <input class="form-control" name="fringe" type="number" step="0.01" placeholder="0.00" aria-label="Fringe">
+                                                        </div>
+
+                                                        <div class="col-md-6 mb-3">
+                                                        <label class="form-label">Tax</label>
+                                                            <input class="form-control" name="tax" type="number" step="0.01" placeholder="0.00" aria-label="Tax">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                <button type="submit" class="btn btn-submit full">Create Shift Type</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="mb-3 btn-group" role="group">
-                                <button class="btn btn-sm btn-outline-primary">Add</button>
+                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#createShiftTypeModal">Create Shift Type</button>
                                 <button class="btn btn-sm btn-outline-secondary">Save</button>
                                 <button class="btn btn-sm btn-outline-danger">Delete</button>
                                 </div>
 
                                 <div class="mb-3">
                                 <label class="form-label">Shift Type</label>
-                                    <select class="form-select" aria-label="Shift type">
+                                    <select class="form-select" id="shiftTypeSelect" name="shift_type_id" aria-label="Shift type">
                                     <option value="">Select...</option>
-                                        <?php while ($row = $shift_types->fetch_assoc()): ?>
-                                        <option value="<?= htmlspecialchars($row['id'] ?? $row['shift_name']) ?>">
-                                            <?= htmlspecialchars($row['shift_name']) ?>
+                                        <?php foreach ($shift_type_rows as $row): ?>
+                                        <option value="<?= htmlspecialchars($row['id']) ?>">
+                                            <?= htmlspecialchars($row['name']) ?>
                                         </option>
-                                        <?php endwhile; ?>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
 
-                                <div class="mb-3">
-                                <label class="form-label">Rate</label>
-                                    <input class="form-control" type="number" step="0.01" placeholder="0.00" aria-label="Rate">
-                                </div>
+                                <div id="selectedShiftTypeFields">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Rate</label>
+                                        <input name="rate" class="form-control" type="number" step="0.01" placeholder="0.00" aria-label="Rate">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Deductable</label>
+                                        <input class="form-control" name="deductable" type="number" step="0.01" placeholder="0.00" aria-label="Deductable">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Laundry Allowance</label>
+                                        <input class="form-control" name="l_allow" type="number" step="0.01" placeholder="0.00" aria-label="Laundry Allowance">
+                                    </div>
 
-                                <div class="mb-3">
-                                <label class="form-label">Laundry Allowance</label>
-                                    <input class="form-control" type="number" step="0.01" placeholder="0.00" aria-label="Laundry Allowance">
-                                </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Uniform Allowance</label>
+                                        <input class="form-control" name="u_allow" type="number" step="0.01" placeholder="0.00" aria-label="Uniform Allowance">
+                                    </div>
 
-                                <div class="mb-3">
-                                <label class="form-label">Uniform Allowance</label>
-                                    <input class="form-control" type="number" step="0.01" placeholder="0.00" aria-label="Uniform Allowance">
-                                </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Fringe</label>
+                                        <input class="form-control" name="fringe" type="number" step="0.01" placeholder="0.00" aria-label="Fringe">
+                                    </div>
 
-                                <div class="mb-3">
-                                <label class="form-label">Fringe</label>
-                                    <input class="form-control" type="number" step="0.01" placeholder="0.00" aria-label="Fringe">
-                                </div>
-
-                                <div class="mb-3">
-                                <label class="form-label">Tax</label>
-                                    <input class="form-control" type="number" step="0.01" placeholder="0.00" aria-label="Tax">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Tax</label>
+                                        <input class="form-control" name="tax" type="number" step="0.01" placeholder="0.00" aria-label="Tax">
+                                    </div>
                                 </div>
 
                             </div>
@@ -124,7 +195,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                 <h4 class="mb-0">Shifts</h4>
 
                                     <div>
-                                        <button class="btn btn-outline-success" type="submit"data-bs-toggle="modal" data-bs-target="#addShiftModal">Add Shift</button>
+                                    <button class="btn btn-outline-success" type="submit"data-bs-toggle="modal" data-bs-target="#addShiftModal">Add Shift</button>
                                     </div>
                                 </div>
 
@@ -306,7 +377,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                             .'<form method="post" action="payslipDeleteShiftAction.php"><div class="modal-body">'
                                                                                 .'<input type="hidden" name="id" value="'.htmlspecialchars($row['id']).'">'
                                                                             .'<p>Are you sure you want to delete this shift? This cannot be undone.</p>'
-                                                                            
+
                                                                             .'<div class="modal-footer"><button type="submit" class="btn btn-danger full">Delete</button></div></div></form></div></div></div>';
 
                                                                             endwhile;
@@ -336,5 +407,37 @@ if (session_status() === PHP_SESSION_NONE) {
                                                 </div>
 
                                             </div>
+
+                                            <script>
+                                                (() => {
+                                                    const shiftTypes = <?= json_encode($shift_type_rows, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>;
+                                                    const select = document.getElementById('shiftTypeSelect');
+                                                    const fields = document.getElementById('selectedShiftTypeFields');
+
+                                                    if (!select || !fields) {
+                                                        return;
+                                                    }
+
+                                                    const fieldNames = ['rate', 'deductable', 'l_allow', 'u_allow', 'fringe', 'tax'];
+
+                                                    const applyShiftType = () => {
+                                                        const selectedId = select.value;
+                                                        const selectedShiftType = shiftTypes.find((shiftType) => String(shiftType.id) === String(selectedId));
+
+                                                        fieldNames.forEach((fieldName) => {
+                                                            const input = fields.querySelector(`[name="${fieldName}"]`);
+
+                                                            if (!input) {
+                                                                return;
+                                                            }
+
+                                                            input.value = selectedShiftType ? (selectedShiftType[fieldName] ?? '') : '';
+                                                        });
+                                                    };
+
+                                                    select.addEventListener('change', applyShiftType);
+                                                    applyShiftType();
+                                                })();
+                                            </script>
 
                                             <?php include_once "indexFooter.php"; ?>
