@@ -127,53 +127,94 @@ if (session_status() === PHP_SESSION_NONE) {
                                     </div>
                                 </div>
 
-                                <div class="mb-3 btn-group" role="group">
-                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#createShiftTypeModal">Create Shift Type</button>
-                                <button class="btn btn-sm btn-outline-secondary">Save</button>
-                                <button class="btn btn-sm btn-outline-danger">Delete</button>
-                                </div>
-
-                                <div class="mb-3">
-                                <label class="form-label">Shift Type</label>
-                                    <select class="form-select" id="shiftTypeSelect" name="shift_type_id" aria-label="Shift type">
-                                    <option value="">Select...</option>
-                                        <?php foreach ($shift_type_rows as $row): ?>
-                                        <option value="<?= htmlspecialchars($row['id']) ?>">
-                                            <?= htmlspecialchars($row['name']) ?>
-                                        </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-
-                                <div id="selectedShiftTypeFields">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Rate</label>
-                                        <input name="rate" class="form-control" type="number" step="0.01" placeholder="0.00" aria-label="Rate">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Deductable</label>
-                                        <input class="form-control" name="deductable" type="number" step="0.01" placeholder="0.00" aria-label="Deductable">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Laundry Allowance</label>
-                                        <input class="form-control" name="l_allow" type="number" step="0.01" placeholder="0.00" aria-label="Laundry Allowance">
+                                <form id="shiftTypeForm" method="post" action="payslipUpdateShiftTypeAction.php">
+                                    <input type="hidden" name="user_code" value="<?= htmlspecialchars($_SESSION['user_code']) ?>">
+                                    <input type="hidden" id="shiftTypeId" name="id" value="">
+                                    <div class="mb-3 btn-group" role="group">
+                                        <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#createShiftTypeModal">Create Shift Type</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#saveShiftTypeModal">Save</button>
+                                        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteShiftTypeModal">Delete</button>
                                     </div>
 
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Uniform Allowance</label>
-                                        <input class="form-control" name="u_allow" type="number" step="0.01" placeholder="0.00" aria-label="Uniform Allowance">
+                                    <div class="mb-3">
+                                        <label class="form-label">Shift Type</label>
+                                        <select class="form-select" id="shiftTypeSelect" name="shift_type_id" aria-label="Shift type">
+                                            <option value="">Select...</option>
+                                            <?php foreach ($shift_type_rows as $row): ?>
+                                            <option value="<?= htmlspecialchars($row['id']) ?>">
+                                                <?= htmlspecialchars($row['name']) ?>
+                                            </option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
 
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Fringe</label>
-                                        <input class="form-control" name="fringe" type="number" step="0.01" placeholder="0.00" aria-label="Fringe">
+                                    <div id="selectedShiftTypeFields">
+<input type="hidden" name="name" class="form-control" id="shiftTypeName" placeholder="Shift Type Name" aria-label="Shift Type Name">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Rate</label>
+                                            <input name="rate" class="form-control" type="number" step="0.01" placeholder="0.00" aria-label="Rate">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Deductable</label>
+                                            <input class="form-control" name="deductable" type="number" step="0.01" placeholder="0.00" aria-label="Deductable">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Laundry Allowance</label>
+                                            <input class="form-control" name="l_allow" type="number" step="0.01" placeholder="0.00" aria-label="Laundry Allowance">
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Uniform Allowance</label>
+                                            <input class="form-control" name="u_allow" type="number" step="0.01" placeholder="0.00" aria-label="Uniform Allowance">
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Fringe</label>
+                                            <input class="form-control" name="fringe" type="number" step="0.01" placeholder="0.00" aria-label="Fringe">
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label">Tax</label>
+                                            <input class="form-control" name="tax" type="number" step="0.01" placeholder="0.00" aria-label="Tax">
+                                        </div>
                                     </div>
 
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Tax</label>
-                                        <input class="form-control" name="tax" type="number" step="0.01" placeholder="0.00" aria-label="Tax">
+                                    <div class="modal fade" id="saveShiftTypeModal" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Confirm Save</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Save the selected shift type changes?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-primary" form="shiftTypeForm" formaction="payslipUpdateShiftTypeAction.php" formmethod="post">Save Changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+
+                                    <div class="modal fade" id="deleteShiftTypeModal" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Confirm Delete</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Delete the selected shift type? This will set its status to 0.
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-danger" form="shiftTypeForm" formaction="payslipDeleteShiftTypeAction.php" formmethod="post">Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
 
                             </div>
                         </div>
@@ -413,16 +454,19 @@ if (session_status() === PHP_SESSION_NONE) {
                                                     const shiftTypes = <?= json_encode($shift_type_rows, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>;
                                                     const select = document.getElementById('shiftTypeSelect');
                                                     const fields = document.getElementById('selectedShiftTypeFields');
+                                                    const hiddenId = document.getElementById('shiftTypeId');
 
-                                                    if (!select || !fields) {
+                                                    if (!select || !fields || !hiddenId) {
                                                         return;
                                                     }
 
-                                                    const fieldNames = ['rate', 'deductable', 'l_allow', 'u_allow', 'fringe', 'tax'];
+                                                    const fieldNames = ['name', 'rate', 'deductable', 'l_allow', 'u_allow', 'fringe', 'tax'];
 
                                                     const applyShiftType = () => {
                                                         const selectedId = select.value;
                                                         const selectedShiftType = shiftTypes.find((shiftType) => String(shiftType.id) === String(selectedId));
+
+                                                        hiddenId.value = selectedShiftType ? selectedShiftType.id : '';
 
                                                         fieldNames.forEach((fieldName) => {
                                                             const input = fields.querySelector(`[name="${fieldName}"]`);
