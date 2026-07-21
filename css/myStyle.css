@@ -99,3 +99,12 @@ button.btn.btn-danger.full{
 btn.btn.btn-danger.full:hover {
     background-color: #c10b0b;
 }
+label.form-label {
+    text-align: center;
+    width: 100%;
+
+}
+div.mb-3.btn-group{
+    text-align: center;
+    width: 100%;
+}
