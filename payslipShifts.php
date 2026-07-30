@@ -11,6 +11,20 @@ if (session_status() === PHP_SESSION_NONE) {
         include_once "indexHeader.php";
 
         $conn = new mysqli($host, $user, $pass, $db);
+        $selectedShiftTypeId = $_GET['selected_shift_type_id'] ?? '';
+
+        $renderShiftTypeOptions = function (array $shiftTypeRows, $selectedId = '') {
+            $options = '<option value="">Select...</option>';
+
+            foreach ($shiftTypeRows as $row) {
+                $isSelected = ((string)($row['id'] ?? '') === (string)$selectedId) ? ' selected' : '';
+                $options .= '<option value="' . htmlspecialchars((string)$row['id']) . '"' . $isSelected . '>'
+                    . htmlspecialchars($row['name'] ?? '')
+                    . '</option>';
+            }
+
+            return $options;
+        };
 
         /* Shift Types */
         $shift_types = $conn->query("
@@ -29,13 +43,16 @@ if (session_status() === PHP_SESSION_NONE) {
 
                 /* Shift Records */
                 $shift_records = $conn->query("
-                SELECT *
+                SELECT shift_records.*, shift_types.name AS shift_type_name
                 FROM shift_records
-                WHERE user_code = '" . $_SESSION['user_code'] . "'
-                AND status = '1'
+                LEFT JOIN shift_types ON shift_types.id = shift_records.shift_type
+                    AND shift_types.user_code = shift_records.user_code
+                    AND shift_types.status = '1'
+                WHERE shift_records.user_code = '" . $_SESSION['user_code'] . "'
+                AND shift_records.status = '1'
                 ");
 
-                
+
                 ?>
 
                 <style>
@@ -143,7 +160,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                                 <select class="form-select" id="shiftTypeSelect" name="shift_type_id" aria-label="Shift type">
                                                 <option value="">Select...</option>
                                                     <?php foreach ($shift_type_rows as $row): ?>
-                                                    <option value="<?= htmlspecialchars($row['id']) ?>">
+                                                    <option value="<?= htmlspecialchars($row['id']) ?>" <?= ((string)$selectedShiftTypeId === (string)$row['id']) ? 'selected' : '' ?>>
                                                         <?= htmlspecialchars($row['name']) ?>
                                                     </option>
                                                     <?php endforeach; ?>
@@ -319,29 +336,36 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                 </div>
                                                             </div>
 
+                                                            <div class="mb-3">
+                                                            <label class="form-label">Shift Type</label>
+                                                                <select class="form-select shift-record-type-select" name="shift_type" aria-label="Shift type">
+                                                                    <?= $renderShiftTypeOptions($shift_type_rows) ?>
+                                                                </select>
+                                                            </div>
+
                                                             <div class="row">
                                                                 <div class="col-md-6 mb-3">
                                                                 <label class="form-label">Laundry Allowance</label>
-                                                                    <input type="number" name="laundry" class="form-control" step="0.01" placeholder="0.00">
+                                                                    <input type="number" name="laundry" class="form-control shift-rate-field" step="0.01" placeholder="0.00">
                                                                 </div>
                                                                 <div class="col-md-6 mb-3">
                                                                 <label class="form-label">Uniform Allowance</label>
-                                                                    <input type="number" name="uniform" class="form-control" step="0.01" placeholder="0.00">
+                                                                    <input type="number" name="uniform" class="form-control shift-rate-field" step="0.01" placeholder="0.00">
                                                                 </div>
                                                             </div>
 
-                                                            
-                                                                                <div class="row">
-                                                                                    <div class="col-md-6 mb-3">
-                                                                                    <label for="start_day_holi" class="form-label d-block">Start Holiday</label>
-                                                                                        <input type="checkbox"  name="start_day_holi" class="form-check-input">
-                                                                                    </div>
 
-                                                                                    <div class="col-md-6 mb-3">
-                                                                                    <label for="end_day_holi" class="form-label d-block">End Holiday</label>
-                                                                                        <input type="checkbox"  name="end_day_holi" class="form-check-input">
-                                                                                    </div>
-                                                                                </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6 mb-3">
+                                                                <label class="form-label">Shift Allow</label>
+                                                                    <input type="number"  name="shift_allow" class="form-control" step="0.01" placeholder="0.00">
+                                                                </div>
+
+                                                                <div class="col-md-6 mb-3">
+                                                                <label class="form-label d-block">Holiday Shift</label>
+                                                                    <input type="checkbox"  name="is_holi" class="form-check-input" value="1">
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div class="modal-footer">
                                                         <button type="submit" class="btn btn-submit full">Add Shift</button>
@@ -359,6 +383,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
                                                 <thead class="table-light sticky-top">
                                                     <tr>
+                                                    <th>Shift Type</th>
                                                     <th>Date</th>
                                                     <th>Start</th>
                                                     <th>End</th>
@@ -366,8 +391,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                                     <th>Rate</th>
                                                     <th>Laundry</th>
                                                     <th>Uniform</th>
-                                                    <th>S_H</th>
-                                                    <th>E_H</th>
+                                                    <th>Shift Allow</th>
+                                                    <th>Holiday</th>
                                                     <th>Operations</th>
                                                     </tr>
                                                 </thead>
@@ -378,6 +403,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                                     if ($shift_records && $shift_records->num_rows > 0):
                                                             while ($row = $shift_records->fetch_assoc()): ?>
                                                                 <tr>
+                                                                <td><?= htmlspecialchars($row['shift_type_name'] ?? 'Unknown') ?></td>
                                                                 <td><?= date("d M y", strtotime(htmlspecialchars($row['date']))) ?></td>
                                                                 <td><?= date('g:i A', strtotime(htmlspecialchars($row['s_time']))) ?></td>
                                                                 <td><?= date('g:i A', strtotime(htmlspecialchars($row['e_time']))) ?></td>
@@ -385,8 +411,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                 <td><?= '$'.htmlspecialchars($row['rate']) ?></td>
                                                                 <td><?= '$'.htmlspecialchars($row['l_allowance']) ?></td>
                                                                 <td><?= '$'.htmlspecialchars($row['u_allowance']) ?></td>
-                                                                <td><?= '<input type="checkbox" ' . ($row['start_day_holi'] == 1 ? 'checked' : '') . ' disabled>' ?></td>
-                                                                <td><?= '<input type="checkbox" ' . ($row['end_day_holi'] == 1 ? 'checked' : '') . ' disabled>' ?></td>
+                                                                <td><?= '$'.htmlspecialchars($row['shift_allow'] ?? '0.00') ?></td>
+                                                                <td><?= '<input type="checkbox" ' . (!empty($row['is_holi']) ? 'checked' : '') . ' disabled>' ?></td>
                                                                     <td>
                                                                         <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editShiftModal-<?= $row['id'] ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                                                             <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
@@ -403,61 +429,80 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                     .'<div class="modal-header"><h5 class="modal-title">Edit Shift</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>'
                                                                         .'<form method="post" action="payslipUpdateShiftAction.php"><div class="modal-body">'
                                                                             .'<input type="hidden" name="user_code" value="'.htmlspecialchars($_SESSION['user_code']).'">'
-                                                                        .'<div class="mb-2"><label>Date</label><input type="date" name="date" class="form-control" value="'.htmlspecialchars($row['date']).'"></div>'
+                                                                            .'<input type="hidden" name="id" value="'.htmlspecialchars($row['id']).'">'
+                                                                            .'<div class="mb-2"><label>Date</label><input type="date" name="date" class="form-control" value="'.htmlspecialchars($row['date']).'"></div>'
+                                                                            .'<div class="mb-2"><label>Shift Type</label><select class="form-select shift-record-type-select" name="shift_type">'.$renderShiftTypeOptions($shift_type_rows, $row['shift_type'] ?? '').'</select></div>'
                                                                             .'<div class="row">'
                                                                             .'<div class="col-md-6 mb-2"><label>Start Time</label><input type="time" name="start_time" class="form-control" value="'.htmlspecialchars($row['s_time']).'"></div>'
                                                                             .'<div class="col-md-6 mb-2"><label>End Time</label><input type="time" name="end_time" class="form-control" value="'.htmlspecialchars($row['e_time']).'"></div>'
                                                                             .'</div>'
                                                                             .'<div class="row">'
                                                                             .'<div class="col-md-6 mb-2"><label>Breaks (minutes)</label><input type="number" name="breaks" class="form-control" value="'.htmlspecialchars($row['break']).'"></div>'
-                                                                            .'<div class="col-md-6 mb-2"><label>Rate</label><input type="text" name="rate" class="form-control" value="'.htmlspecialchars($row['rate']).'"></div>'
+                                                                            .'</div>'
+                                                                            .'<div class="row">'
+                                                                                .'<div class="col-md-6 mb-3">'
+                                                                                .'<label class="form-label">PM Allow</label>'
+                                                                                    .'<input class="form-control" name="pm_allow" type="number" step="0.01" placeholder="0.00" aria-label="PM Allow">'
+                                                                                .'</div>'
+
+                                                                                .'<div class="col-md-6 mb-3">'
+                                                                                .'<label class="form-label">Saturday Loading</label>'
+                                                                                    .'<input class="form-control" name="sat_loading" type="number" step="0.01" placeholder="0.00" aria-label="Saturday Loading">'
+                                                                                .'</div>'
+                                                                            .'</div>'
+                                                                            .'<div class="row">'
+                                                                                .'<div class="col-md-6 mb-3">'
+                                                                                .'<label class="form-label">Sunday Loading</label>'
+                                                                                    .'<input class="form-control" name="sun_loading" type="number" step="0.01" placeholder="0.00" aria-label="Sunday Loading">'
+                                                                                .'</div>'
+
+                                                                                .'<div class="col-md-6 mb-3">'
+                                                                                .'<label class="form-label">Holiday Loading</label>'
+                                                                                    .'<input class="form-control" name="holi_loading" type="number" step="0.01" placeholder="0.00" aria-label="Holiday Loading">'
+                                                                                .'</div>'
+                                                                            .'</div>'
+                                                                            .'<div class="col-md-6 mb-2"><label>Rate</label><input type="number" step="0.01" name="rate" class="form-control" value="'.htmlspecialchars($row['rate']).'"></div>'
                                                                             .'</div>'
                                                                             .'<div class="row">'
                                                                             .'<div class="col-md-6 mb-2"><label>Laundry Allowance</label><input type="number" step="0.01" name="laundry" class="form-control" value="'.htmlspecialchars($row['l_allowance']).'"></div>'
                                                                             .'<div class="col-md-6 mb-2"><label>Uniform Allowance</label><input type="number" step="0.01" name="uniform" class="form-control" value="'.htmlspecialchars($row['u_allowance']).'"></div>'
                                                                             .'</div>'
                                                                             .'<div class="row">'
-                                                                                
-                                                                                    .'<div class="col-md-6 mb-3">'
-                                                                                    .'<label for="start_day_holi" class="form-label d-block">Start Holiday</label>'
-                                                                                        .'<input type="checkbox" id="start_day_holi" name="start_day_holi" class="form-check-input" value="1" '.($row['start_day_holi'] == 1 ? 'checked' : '').'>'
-                                                                                    .'</div>'
-
-                                                                                    .'<div class="col-md-6 mb-3">'
-                                                                                    .'<label for="end_day_holi" class="form-label d-block">End Holiday</label>'
-                                                                                        .'<input type="checkbox" id="end_day_holi" name="end_day_holi" class="form-check-input" value="1" '.($row['end_day_holi'] == 1 ? 'checked' : '').'>'
-                                                                                    .'</div>'
+                                                                                .'<div class="col-md-6 mb-3">'
+                                                                                .'<label class="form-label">Shift Allow</label>'
+                                                                                    .'<input type="number" step="0.01" name="shift_allow" class="form-control" value="'.htmlspecialchars($row['shift_allow'] ?? '0.00').'">'
                                                                                 .'</div>'
-                                                                             
-                                                    
 
-                                                                            .'</div><div class="modal-footer"><button type="submit" class="btn btn-submit full">Update</button></div></form></div></div></div>';
+                                                                                .'<div class="col-md-6 mb-3">'
+                                                                                .'<label class="form-label d-block">Holiday Shift</label>'
+                                                                                    .'<input type="checkbox" name="is_holi" class="form-check-input" value="1" '.(!empty($row['is_holi']) ? 'checked' : '').'>'
+                                                                                .'</div>'
+                                                                            .'</div>'
+                                                                        .'</div><div class="modal-footer"><button type="submit" class="btn btn-submit full">Update</button></div></form></div></div></div>';
 
-                                                                                $modals .= '<div class="modal fade" id="deleteShiftModal-'.htmlspecialchars($row['id']).'" tabindex="-1" aria-hidden="true">'
-                                                                                    .'<div class="modal-dialog"><div class="modal-content">'
-                                                                                    .'<div class="modal-header"><h5 class="modal-title">Delete Shift</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>'
-                                                                                        .'<form method="post" action="payslipDeleteShiftAction.php"><div class="modal-body">'
-                                                                                            .'<input type="hidden" name="id" value="'.htmlspecialchars($row['id']).'">'
-                                                                                        .'<p>Are you sure you want to delete this shift? This cannot be undone.</p>'
+                                                                            $modals .= '<div class="modal fade" id="deleteShiftModal-'.htmlspecialchars($row['id']).'" tabindex="-1" aria-hidden="true">'
+                                                                                .'<div class="modal-dialog"><div class="modal-content">'
+                                                                                .'<div class="modal-header"><h5 class="modal-title">Delete Shift</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>'
+                                                                                    .'<form method="post" action="payslipDeleteShiftAction.php"><div class="modal-body">'
+                                                                                        .'<input type="hidden" name="id" value="'.htmlspecialchars($row['id']).'">'
+                                                                                    .'<p>Are you sure you want to delete this shift? This cannot be undone.</p>'
 
-                                                                                        .'<div class="modal-footer"><button type="submit" class="btn btn-danger full">Delete</button></div></div></form></div></div></div>';
+                                                                                    .'<div class="modal-footer"><button type="submit" class="btn btn-danger full">Delete</button></div></div></form></div></div></div>';
 
-                                                                                        endwhile;
-                                                                                        else: ?>
-                                                                                        <tr>
-                                                                                        <td colspan="10" class="text-center">No shifts found.</td>
-                                                                                        </tr>
-                                                                                        <?php endif; ?>
-                                                                                    </tbody>
+                                                                                    endwhile;
+                                                                                    else: ?>
+                                                                                    <tr>
+                                                                                    <td colspan="11" class="text-center">No shifts found.</td>
+                                                                                    </tr>
+                                                                                    <?php endif; ?>
+                                                                                </tbody>
 
-                                                                                </table>
+                                                                            </table>
 
-                                                                                <?php
-                                                                                // output modals after the table
-                                                                                if (!empty($modals)) echo $modals;
-                                                                                    ?>
-
-                                                                                </div>
+                                                                            <?php
+                                                                            // output modals after the table
+                                                                            if (!empty($modals)) echo $modals;
+                                                                                ?>
 
                                                                             </div>
 
@@ -466,45 +511,72 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                     </div>
 
                                                                 </div>
-                                                            </div>
 
+                                                            </div>
                                                         </div>
 
-                                                        <script>
-                                                            (() => {
-                                                                const shiftTypes = <?= json_encode($shift_type_rows, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>;
-                                                                const select = document.getElementById('shiftTypeSelect');
-                                                                const fields = document.getElementById('selectedShiftTypeFields');
-                                                                const hiddenId = document.getElementById('shiftTypeId');
+                                                    </div>
 
-                                                                if (!select || !fields || !hiddenId) {
+                                                    <script>
+                                                        (() => {
+                                                            const shiftTypes = <?= json_encode($shift_type_rows, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>;
+                                                            const select = document.getElementById('shiftTypeSelect');
+                                                            const fields = document.getElementById('selectedShiftTypeFields');
+                                                            const hiddenId = document.getElementById('shiftTypeId');
+
+                                                            if (!select || !fields || !hiddenId) {
+                                                                    return;
+                                                                }
+
+                                                                const fieldNames = ['name', 'rate', 'deductable', 'l_allow', 'u_allow', 'pm_allow', 'sat_loading', 'sun_loading', 'holi_loading', 'fringe', 'tax'];
+
+                                                                const applyShiftType = () => {
+                                                                    const selectedId = select.value;
+                                                                    const selectedShiftType = shiftTypes.find((shiftType) => String(shiftType.id) === String(selectedId));
+
+                                                                    hiddenId.value = selectedShiftType ? selectedShiftType.id : '';
+
+                                                                    fieldNames.forEach((fieldName) => {
+                                                                        const input = fields.querySelector(`[name="${fieldName}"]`);
+
+                                                                        if (!input) {
+                                                                                return;
+                                                                            }
+
+                                                                            input.value = selectedShiftType ? (selectedShiftType[fieldName] ?? '') : '';
+                                                                    });
+                                                                };
+
+                                                                select.addEventListener('change', applyShiftType);
+                                                                applyShiftType();
+
+                                                            document.querySelectorAll('.shift-record-type-select').forEach((recordSelect) => {
+                                                                recordSelect.addEventListener('change', () => {
+                                                                    const selectedShiftType = shiftTypes.find((shiftType) => String(shiftType.id) === String(recordSelect.value));
+                                                                    const form = recordSelect.closest('form');
+
+                                                                    if (!form || !selectedShiftType) {
                                                                         return;
                                                                     }
 
-                                                                    const fieldNames = ['name', 'rate', 'deductable', 'l_allow', 'u_allow', 'fringe', 'tax'];
-
-                                                                    const applyShiftType = () => {
-                                                                        const selectedId = select.value;
-                                                                        const selectedShiftType = shiftTypes.find((shiftType) => String(shiftType.id) === String(selectedId));
-
-                                                                        hiddenId.value = selectedShiftType ? selectedShiftType.id : '';
-
-                                                                        fieldNames.forEach((fieldName) => {
-                                                                            const input = fields.querySelector(`[name="${fieldName}"]`);
-
-                                                                            if (!input) {
-                                                                                    return;
-                                                                                }
-
-                                                                                input.value = selectedShiftType ? (selectedShiftType[fieldName] ?? '') : '';
-                                                                        });
+                                                                    const fieldMap = {
+                                                                        rate: 'rate',
+                                                                        laundry: 'l_allow',
+                                                                        uniform: 'u_allow',
                                                                     };
 
-                                                                    select.addEventListener('change', applyShiftType);
-                                                                    applyShiftType();
-                                                            })();
-                                                        </script>
+                                                                    Object.entries(fieldMap).forEach(([recordField, typeField]) => {
+                                                                        const input = form.querySelector(`[name="${recordField}"]`);
 
-                                                        <?php 
-                                                        $conn->close();
-                                                         include_once "indexFooter.php"; ?>
+                                                                        if (input && selectedShiftType[typeField] !== undefined) {
+                                                                            input.value = selectedShiftType[typeField] ?? '';
+                                                                        }
+                                                                    });
+                                                                });
+                                                            });
+                                                        })();
+                                                    </script>
+
+                                                    <?php
+                                                    $conn->close();
+                                                    include_once "indexFooter.php"; ?>

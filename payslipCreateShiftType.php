@@ -20,6 +20,10 @@ $user_code= trim($_POST['user_code']);
   $deductable = floatval(trim($_POST['deductable']));
   $l_allow = floatval(trim($_POST['l_allow']));
   $u_allow = floatval(trim($_POST['u_allow']));
+  $pm_allow = floatval(trim($_POST['pm_allow'] ?? 0));
+  $sat_loading = floatval(trim($_POST['sat_loading'] ?? 0));
+  $sun_loading = floatval(trim($_POST['sun_loading'] ?? 0));
+  $holi_loading = floatval(trim($_POST['holi_loading'] ?? 0));
   $fringe = floatval(trim($_POST['fringe']));
   $tax = floatval(trim($_POST['tax']));
 
@@ -32,12 +36,12 @@ $user_code= trim($_POST['user_code']);
   }
 
   // insert data into the shifts table
-  $sql = "INSERT INTO shift_types (user_code, name, rate, deductable, l_allow, u_allow, fringe, tax) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+  $sql = "INSERT INTO shift_types (user_code, name, rate, deductable, l_allow, u_allow, pm_allow, sat_loading, sun_loading, holi_loading, fringe, tax) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
   $stmt = mysqli_prepare($conn, $sql);
 
   if($stmt){
-    // types: user_code (s), shift_name (s), rate (d), deductable (d), then four floats (d)
-    mysqli_stmt_bind_param($stmt, "ssdddddd", $user_code, $name, $rate, $deductable, $l_allow, $u_allow, $fringe, $tax);
+    // types: user_code (s), shift_name (s), then ten numeric values (d)
+    mysqli_stmt_bind_param($stmt, "ssdddddddddd", $user_code, $name, $rate, $deductable, $l_allow, $u_allow, $pm_allow, $sat_loading, $sun_loading, $holi_loading, $fringe, $tax);
 
     if(mysqli_stmt_execute($stmt)){
       echo "New record created successfully";
