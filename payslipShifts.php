@@ -35,7 +35,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 AND status = '1'
                 ");
 
-                $conn->close();
+                
                 ?>
 
                 <style>
@@ -213,7 +213,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Delete the selected shift type? This will set its status to 0.
+                                                            Delete the selected shift type? This cannot be undone.
                                                         </div>
                                                         <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -330,16 +330,18 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                 </div>
                                                             </div>
 
-                                                            <div class="row">
-                                                                <div class="col-md-6 mb-3">
-                                                                <label class="form-label">Fringe</label>
-                                                                    <input type="number" name="fringe" class="form-control" step="0.01" placeholder="0.00">
-                                                                </div>
-                                                                <div class="col-md-6 mb-3">
-                                                                <label class="form-label">Tax</label>
-                                                                    <input type="number" name="tax" class="form-control" step="0.01" placeholder="0.00">
-                                                                </div>
-                                                            </div>
+                                                            
+                                                                                <div class="row">
+                                                                                    <div class="col-md-6 mb-3">
+                                                                                    <label for="start_day_holi" class="form-label d-block">Start Holiday</label>
+                                                                                        <input type="checkbox"  name="start_day_holi" class="form-check-input">
+                                                                                    </div>
+
+                                                                                    <div class="col-md-6 mb-3">
+                                                                                    <label for="end_day_holi" class="form-label d-block">End Holiday</label>
+                                                                                        <input type="checkbox"  name="end_day_holi" class="form-check-input">
+                                                                                    </div>
+                                                                                </div>
                                                         </div>
                                                         <div class="modal-footer">
                                                         <button type="submit" class="btn btn-submit full">Add Shift</button>
@@ -364,8 +366,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                                     <th>Rate</th>
                                                     <th>Laundry</th>
                                                     <th>Uniform</th>
-                                                    <th>Fringe</th>
-                                                    <th>Tax</th>
+                                                    <th>S_H</th>
+                                                    <th>E_H</th>
                                                     <th>Operations</th>
                                                     </tr>
                                                 </thead>
@@ -383,8 +385,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                 <td><?= '$'.htmlspecialchars($row['rate']) ?></td>
                                                                 <td><?= '$'.htmlspecialchars($row['l_allowance']) ?></td>
                                                                 <td><?= '$'.htmlspecialchars($row['u_allowance']) ?></td>
-                                                                <td><?= '$'.htmlspecialchars($row['fringe']) ?></td>
-                                                                <td><?= '$'.htmlspecialchars($row['tax']) ?></td>
+                                                                <td><?= '<input type="checkbox" ' . ($row['start_day_holi'] == 1 ? 'checked' : '') . ' disabled>' ?></td>
+                                                                <td><?= '<input type="checkbox" ' . ($row['end_day_holi'] == 1 ? 'checked' : '') . ' disabled>' ?></td>
                                                                     <td>
                                                                         <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editShiftModal-<?= $row['id'] ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                                                             <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
@@ -415,34 +417,47 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                             .'<div class="col-md-6 mb-2"><label>Uniform Allowance</label><input type="number" step="0.01" name="uniform" class="form-control" value="'.htmlspecialchars($row['u_allowance']).'"></div>'
                                                                             .'</div>'
                                                                             .'<div class="row">'
-                                                                            .'<div class="col-md-6 mb-2"><label>Fringe</label><input type="number" step="0.01" name="fringe" class="form-control" value="'.htmlspecialchars($row['fringe']).'"></div>'
-                                                                            .'<div class="col-md-6 mb-2"><label>Tax</label><input type="number" step="0.01" name="tax" class="form-control" value="'.htmlspecialchars($row['tax']).'"></div>'
-                                                                            .'</div>'
-                                                                        .'</div><div class="modal-footer"><button type="submit" class="btn btn-submit full">Update</button></div></form></div></div></div>';
+                                                                                
+                                                                                    .'<div class="col-md-6 mb-3">'
+                                                                                    .'<label for="start_day_holi" class="form-label d-block">Start Holiday</label>'
+                                                                                        .'<input type="checkbox" id="start_day_holi" name="start_day_holi" class="form-check-input" value="1" '.($row['start_day_holi'] == 1 ? 'checked' : '').'>'
+                                                                                    .'</div>'
 
-                                                                            $modals .= '<div class="modal fade" id="deleteShiftModal-'.htmlspecialchars($row['id']).'" tabindex="-1" aria-hidden="true">'
-                                                                                .'<div class="modal-dialog"><div class="modal-content">'
-                                                                                .'<div class="modal-header"><h5 class="modal-title">Delete Shift</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>'
-                                                                                    .'<form method="post" action="payslipDeleteShiftAction.php"><div class="modal-body">'
-                                                                                        .'<input type="hidden" name="id" value="'.htmlspecialchars($row['id']).'">'
-                                                                                    .'<p>Are you sure you want to delete this shift? This cannot be undone.</p>'
+                                                                                    .'<div class="col-md-6 mb-3">'
+                                                                                    .'<label for="end_day_holi" class="form-label d-block">End Holiday</label>'
+                                                                                        .'<input type="checkbox" id="end_day_holi" name="end_day_holi" class="form-check-input" value="1" '.($row['end_day_holi'] == 1 ? 'checked' : '').'>'
+                                                                                    .'</div>'
+                                                                                .'</div>'
+                                                                             
+                                                    
 
-                                                                                    .'<div class="modal-footer"><button type="submit" class="btn btn-danger full">Delete</button></div></div></form></div></div></div>';
+                                                                            .'</div><div class="modal-footer"><button type="submit" class="btn btn-submit full">Update</button></div></form></div></div></div>';
 
-                                                                                    endwhile;
-                                                                                    else: ?>
-                                                                                    <tr>
-                                                                                    <td colspan="10" class="text-center">No shifts found.</td>
-                                                                                    </tr>
-                                                                                    <?php endif; ?>
-                                                                                </tbody>
+                                                                                $modals .= '<div class="modal fade" id="deleteShiftModal-'.htmlspecialchars($row['id']).'" tabindex="-1" aria-hidden="true">'
+                                                                                    .'<div class="modal-dialog"><div class="modal-content">'
+                                                                                    .'<div class="modal-header"><h5 class="modal-title">Delete Shift</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>'
+                                                                                        .'<form method="post" action="payslipDeleteShiftAction.php"><div class="modal-body">'
+                                                                                            .'<input type="hidden" name="id" value="'.htmlspecialchars($row['id']).'">'
+                                                                                        .'<p>Are you sure you want to delete this shift? This cannot be undone.</p>'
 
-                                                                            </table>
+                                                                                        .'<div class="modal-footer"><button type="submit" class="btn btn-danger full">Delete</button></div></div></form></div></div></div>';
 
-                                                                            <?php
-                                                                            // output modals after the table
-                                                                            if (!empty($modals)) echo $modals;
-                                                                                ?>
+                                                                                        endwhile;
+                                                                                        else: ?>
+                                                                                        <tr>
+                                                                                        <td colspan="10" class="text-center">No shifts found.</td>
+                                                                                        </tr>
+                                                                                        <?php endif; ?>
+                                                                                    </tbody>
+
+                                                                                </table>
+
+                                                                                <?php
+                                                                                // output modals after the table
+                                                                                if (!empty($modals)) echo $modals;
+                                                                                    ?>
+
+                                                                                </div>
 
                                                                             </div>
 
@@ -451,45 +466,45 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                     </div>
 
                                                                 </div>
-
                                                             </div>
+
                                                         </div>
 
-                                                    </div>
+                                                        <script>
+                                                            (() => {
+                                                                const shiftTypes = <?= json_encode($shift_type_rows, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>;
+                                                                const select = document.getElementById('shiftTypeSelect');
+                                                                const fields = document.getElementById('selectedShiftTypeFields');
+                                                                const hiddenId = document.getElementById('shiftTypeId');
 
-                                                    <script>
-                                                        (() => {
-                                                            const shiftTypes = <?= json_encode($shift_type_rows, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?>;
-                                                            const select = document.getElementById('shiftTypeSelect');
-                                                            const fields = document.getElementById('selectedShiftTypeFields');
-                                                            const hiddenId = document.getElementById('shiftTypeId');
+                                                                if (!select || !fields || !hiddenId) {
+                                                                        return;
+                                                                    }
 
-                                                            if (!select || !fields || !hiddenId) {
-                                                                    return;
-                                                                }
+                                                                    const fieldNames = ['name', 'rate', 'deductable', 'l_allow', 'u_allow', 'fringe', 'tax'];
 
-                                                                const fieldNames = ['name', 'rate', 'deductable', 'l_allow', 'u_allow', 'fringe', 'tax'];
+                                                                    const applyShiftType = () => {
+                                                                        const selectedId = select.value;
+                                                                        const selectedShiftType = shiftTypes.find((shiftType) => String(shiftType.id) === String(selectedId));
 
-                                                                const applyShiftType = () => {
-                                                                    const selectedId = select.value;
-                                                                    const selectedShiftType = shiftTypes.find((shiftType) => String(shiftType.id) === String(selectedId));
+                                                                        hiddenId.value = selectedShiftType ? selectedShiftType.id : '';
 
-                                                                    hiddenId.value = selectedShiftType ? selectedShiftType.id : '';
+                                                                        fieldNames.forEach((fieldName) => {
+                                                                            const input = fields.querySelector(`[name="${fieldName}"]`);
 
-                                                                    fieldNames.forEach((fieldName) => {
-                                                                        const input = fields.querySelector(`[name="${fieldName}"]`);
+                                                                            if (!input) {
+                                                                                    return;
+                                                                                }
 
-                                                                        if (!input) {
-                                                                                return;
-                                                                            }
+                                                                                input.value = selectedShiftType ? (selectedShiftType[fieldName] ?? '') : '';
+                                                                        });
+                                                                    };
 
-                                                                            input.value = selectedShiftType ? (selectedShiftType[fieldName] ?? '') : '';
-                                                                    });
-                                                                };
+                                                                    select.addEventListener('change', applyShiftType);
+                                                                    applyShiftType();
+                                                            })();
+                                                        </script>
 
-                                                                select.addEventListener('change', applyShiftType);
-                                                                applyShiftType();
-                                                        })();
-                                                    </script>
-
-                                                    <?php include_once "indexFooter.php"; ?>
+                                                        <?php 
+                                                        $conn->close();
+                                                         include_once "indexFooter.php"; ?>

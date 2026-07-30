@@ -22,8 +22,8 @@ $user_code= trim($_POST['user_code']);
   $rate = floatval(trim($_POST['rate']));
   $laundry = floatval(trim($_POST['laundry']));
   $uniform = floatval(trim($_POST['uniform']));
-  $fringe = floatval(trim($_POST['fringe']));
-  $tax = floatval(trim($_POST['tax']));
+  $start_day_holi = isset($_POST['start_day_holi']) ? 1 : 0;
+  $end_day_holi   = isset($_POST['end_day_holi']) ? 1 : 0;
 
   // connect to the database
   $conn = mysqli_connect("localhost", "root", "", "yr11_test_db");
@@ -34,12 +34,12 @@ $user_code= trim($_POST['user_code']);
   }
 
   // insert data into the shifts table
-  $sql = "INSERT INTO shift_records (user_code, date, s_time, e_time, break, rate, l_allowance, u_allowance, fringe, tax) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  $sql = "INSERT INTO shift_records (user_code, date, s_time, e_time, break, rate, l_allowance, u_allowance, start_day_holi, end_day_holi) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
   $stmt = mysqli_prepare($conn, $sql);
 
   if($stmt){
     // types: user_code (s), date (s), start_time (s), end_time (s), then five floats (d)
-    mysqli_stmt_bind_param($stmt, "ssssdddddd", $user_code, $date, $start_time, $end_time, $breaks, $rate, $laundry, $uniform, $fringe, $tax);
+    mysqli_stmt_bind_param($stmt, "ssssdddddd", $user_code, $date, $start_time, $end_time, $breaks, $rate, $laundry, $uniform, $start_day_holi, $end_day_holi);
 
     if(mysqli_stmt_execute($stmt)){
       echo "New record created successfully";
