@@ -108,3 +108,12 @@ div.mb-3.btn-group{
     text-align: center;
     width: 100%;
 }
+row.g-2.three-col-row.align-items-end{
+    text-align: center;
+    align-items: center;
+}
+row{
+    text-align: center;
+    align-items: center;
+
+}

@@ -60,11 +60,28 @@ if (session_status() === PHP_SESSION_NONE) {
                     .payslip-card {box-shadow: 0 6px 18px rgba(0,0,0,0.06);}
                     .table-container{height:460px; overflow:auto;}
                     .left-panel .form-label{font-size:0.95rem}
-                    .left-panel .btn-group > .btn{min-width:72px}
+                    .left-panel .btn-group > .btn{flex:1 1 0; min-width:0}
                     .left-panel .form-control{border-radius:6px}
                     .shifts-header{min-height:64px}
                     .modal .modal-body .form-label{font-weight:600}
                     .table thead th{background:#fafafa}
+                    .payslip-modal .modal-dialog{width:min(100%, 720px); max-width:calc(100vw - 2rem)}
+                    .payslip-modal .modal-content{border:0; box-shadow:0 12px 32px rgba(0,0,0,.15)}
+                    .payslip-modal .modal-dialog.modal-sm{max-width:420px}
+                    .payslip-modal .modal-header{padding:.9rem 1rem}
+                    .payslip-modal .modal-body{padding:.9rem 1rem .5rem}
+                    .payslip-modal .modal-footer{padding:.75rem 1rem 1rem; border-top:0; display:flex; gap:.5rem}
+                    .payslip-modal .modal-footer .btn{flex:1 1 0}
+                    .payslip-modal .shift-form-grid .row{margin-bottom:.3rem}
+                    .payslip-modal .shift-form-grid .row > [class^="col"]{display:flex; flex-direction:column}
+                    .payslip-modal .shift-form-grid .form-label{font-size:.82rem; font-weight:600; margin-bottom:.2rem}
+                    .payslip-modal .shift-form-grid .form-control,
+                    .payslip-modal .shift-form-grid .form-select{padding:.35rem .55rem; font-size:.92rem; width:100%; min-height:2.25rem}
+                    .payslip-modal .shift-form-grid .form-check{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.25rem; padding-top:.35rem; margin:0; min-height:2.25rem; text-align:center}
+                    .payslip-modal .shift-form-grid .form-check-input{margin:0}
+                    .payslip-modal .shift-form-grid .holiday-field{display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:2.25rem}
+                    .payslip-modal .shift-form-grid .three-col-row{display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:.5rem}
+                    .payslip-modal .shift-form-grid .three-col-row > .col-sm-4{width:100%}
                 </style>
 
                 <div class="container-fluid p-4">
@@ -296,8 +313,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                             </div>
                                         </div>
 
-                                        <div class="modal fade" id="addShiftModal" tabindex="-1">
-                                            <div class="modal-dialog">
+                                        <div class="modal fade payslip-modal" id="addShiftModal" tabindex="-1">
+                                            <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
 
                                                     <div class="modal-header">
@@ -306,69 +323,67 @@ if (session_status() === PHP_SESSION_NONE) {
                                                     </div>
 
                                                     <form method="post" action="payslipCreateShiftAction.php">
-                                                        <div class="modal-body">
+                                                        <div class="modal-body shift-form-grid">
                                                             <input type="hidden" name="user_code" value="<?= htmlspecialchars($_SESSION['user_code']) ?>">
 
-                                                            <div class="mb-3">
-                                                            <label class="form-label">Date</label>
-                                                                <input type="date" name="date" class="form-control">
-                                                            </div>
-
-                                                            <div class="row">
-                                                                <div class="col-md-6 mb-3">
-                                                                <label class="form-label">Start Time</label>
+                                                            <div class="row g-2 three-col-row">
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">Date</label>
+                                                                    <input type="date" name="date" class="form-control">
+                                                                </div>
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">Shift Type</label>
+                                                                    <select class="form-select shift-record-type-select" name="shift_type" aria-label="Shift type">
+                                                                        <?= $renderShiftTypeOptions($shift_type_rows) ?>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">Start Time</label>
                                                                     <input type="time" name="start_time" class="form-control">
                                                                 </div>
-                                                                <div class="col-md-6 mb-3">
-                                                                <label class="form-label">End Time</label>
-                                                                    <input type="time" name="end_time" class="form-control">
-                                                                </div>
                                                             </div>
 
-                                                            <div class="row">
-                                                                <div class="col-md-6 mb-3">
-                                                                <label class="form-label">Breaks (minutes)</label>
+                                                            <div class="row g-2 three-col-row">
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">End Time</label>
+                                                                    <input type="time" name="end_time" class="form-control">
+                                                                </div>
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">Breaks (minutes)</label>
                                                                     <input type="number" name="breaks" class="form-control" min="0" step="1">
                                                                 </div>
-                                                                <div class="col-md-6 mb-3">
-                                                                <label class="form-label">Rate</label>
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">Rate</label>
                                                                     <input type="number" name="rate" class="form-control" step="0.01" placeholder="0.00">
                                                                 </div>
                                                             </div>
 
-                                                            <div class="mb-3">
-                                                            <label class="form-label">Shift Type</label>
-                                                                <select class="form-select shift-record-type-select" name="shift_type" aria-label="Shift type">
-                                                                    <?= $renderShiftTypeOptions($shift_type_rows) ?>
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="row">
-                                                                <div class="col-md-6 mb-3">
-                                                                <label class="form-label">Laundry Allowance</label>
+                                                            <div class="row g-2 three-col-row">
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">Laundry Allowance</label>
                                                                     <input type="number" name="laundry" class="form-control shift-rate-field" step="0.01" placeholder="0.00">
                                                                 </div>
-                                                                <div class="col-md-6 mb-3">
-                                                                <label class="form-label">Uniform Allowance</label>
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">Uniform Allowance</label>
                                                                     <input type="number" name="uniform" class="form-control shift-rate-field" step="0.01" placeholder="0.00">
+                                                                </div>
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">Shift Allow</label>
+                                                                    <input type="number" name="shift_allow" class="form-control" step="0.01" placeholder="0.00">
                                                                 </div>
                                                             </div>
 
-
-                                                            <div class="row">
-                                                                <div class="col-md-6 mb-3">
-                                                                <label class="form-label">Shift Allow</label>
-                                                                    <input type="number"  name="shift_allow" class="form-control" step="0.01" placeholder="0.00">
-                                                                </div>
-
-                                                                <div class="col-md-6 mb-3">
-                                                                <label class="form-label d-block">Holiday Shift</label>
-                                                                    <input type="checkbox"  name="is_holi" class="form-check-input" value="1">
+                                                            <div class="row g-2 three-col-row align-items-end">
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">Holiday Shift</label>
+                                                                    <div class="form-check holiday-field">
+                                                                        <input type="checkbox" name="is_holi" class="form-check-input" value="1">
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-submit full">Add Shift</button>
+                                                            <button type="submit" class="btn btn-submit full">Add Shift</button>
                                                         </div>
                                                     </form>
 
@@ -424,61 +439,70 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                 </tr>
                                                                 <?php
                                                                 // build modals separately so they are not inside the table
-                                                                $modals .= '<div class="modal fade" id="editShiftModal-'.htmlspecialchars($row['id']).'" tabindex="-1" aria-hidden="true">'
-                                                                    .'<div class="modal-dialog"><div class="modal-content">'
+                                                                $modals .= '<div class="modal fade payslip-modal" id="editShiftModal-'.htmlspecialchars($row['id']).'" tabindex="-1" aria-hidden="true">'
+                                                                    .'<div class="modal-dialog modal-lg"><div class="modal-content">'
                                                                     .'<div class="modal-header"><h5 class="modal-title">Edit Shift</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>'
-                                                                        .'<form method="post" action="payslipUpdateShiftAction.php"><div class="modal-body">'
-                                                                            .'<input type="hidden" name="user_code" value="'.htmlspecialchars($_SESSION['user_code']).'">'
-                                                                            .'<input type="hidden" name="id" value="'.htmlspecialchars($row['id']).'">'
-                                                                            .'<div class="mb-2"><label>Date</label><input type="date" name="date" class="form-control" value="'.htmlspecialchars($row['date']).'"></div>'
-                                                                            .'<div class="mb-2"><label>Shift Type</label><select class="form-select shift-record-type-select" name="shift_type">'.$renderShiftTypeOptions($shift_type_rows, $row['shift_type'] ?? '').'</select></div>'
-                                                                            .'<div class="row">'
-                                                                            .'<div class="col-md-6 mb-2"><label>Start Time</label><input type="time" name="start_time" class="form-control" value="'.htmlspecialchars($row['s_time']).'"></div>'
-                                                                            .'<div class="col-md-6 mb-2"><label>End Time</label><input type="time" name="end_time" class="form-control" value="'.htmlspecialchars($row['e_time']).'"></div>'
-                                                                            .'</div>'
-                                                                            .'<div class="row">'
-                                                                            .'<div class="col-md-6 mb-2"><label>Breaks (minutes)</label><input type="number" name="breaks" class="form-control" value="'.htmlspecialchars($row['break']).'"></div>'
-                                                                            .'</div>'
-                                                                            .'<div class="row">'
-                                                                                .'<div class="col-md-6 mb-3">'
-                                                                                .'<label class="form-label">PM Allow</label>'
-                                                                                    .'<input class="form-control" name="pm_allow" type="number" step="0.01" placeholder="0.00" aria-label="PM Allow">'
-                                                                                .'</div>'
+                                                                        .'<form method="post" action="payslipUpdateShiftAction.php"><div class="modal-body shift-form-grid">
+                                                                           <div class="modal-body shift-form-grid">
+                                                            <input type="hidden" name="user_code" value="'.htmlspecialchars($_SESSION['user_code']).'">
 
-                                                                                .'<div class="col-md-6 mb-3">'
-                                                                                .'<label class="form-label">Saturday Loading</label>'
-                                                                                    .'<input class="form-control" name="sat_loading" type="number" step="0.01" placeholder="0.00" aria-label="Saturday Loading">'
-                                                                                .'</div>'
-                                                                            .'</div>'
-                                                                            .'<div class="row">'
-                                                                                .'<div class="col-md-6 mb-3">'
-                                                                                .'<label class="form-label">Sunday Loading</label>'
-                                                                                    .'<input class="form-control" name="sun_loading" type="number" step="0.01" placeholder="0.00" aria-label="Sunday Loading">'
-                                                                                .'</div>'
+                                                            <div class="row g-2 three-col-row">
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">Date</label>
+                                                                    <input type="date" name="date" value="'.htmlspecialchars($row['date']).'" class="form-control">
+                                                                </div>
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">Shift Type</label>
+                                                                    <select class="form-select shift-record-type-select" name="shift_type" value="'.htmlspecialchars($row['shift_type']).'" aria-label="Shift type">
+                                                                        '.$renderShiftTypeOptions($shift_type_rows).'
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">Start Time</label>
+                                                                    <input type="time" name="start_time" value="'.htmlspecialchars($row['s_time']).'" class="form-control">
+                                                                </div>
+                                                            </div>
 
-                                                                                .'<div class="col-md-6 mb-3">'
-                                                                                .'<label class="form-label">Holiday Loading</label>'
-                                                                                    .'<input class="form-control" name="holi_loading" type="number" step="0.01" placeholder="0.00" aria-label="Holiday Loading">'
-                                                                                .'</div>'
-                                                                            .'</div>'
-                                                                            .'<div class="col-md-6 mb-2"><label>Rate</label><input type="number" step="0.01" name="rate" class="form-control" value="'.htmlspecialchars($row['rate']).'"></div>'
-                                                                            .'</div>'
-                                                                            .'<div class="row">'
-                                                                            .'<div class="col-md-6 mb-2"><label>Laundry Allowance</label><input type="number" step="0.01" name="laundry" class="form-control" value="'.htmlspecialchars($row['l_allowance']).'"></div>'
-                                                                            .'<div class="col-md-6 mb-2"><label>Uniform Allowance</label><input type="number" step="0.01" name="uniform" class="form-control" value="'.htmlspecialchars($row['u_allowance']).'"></div>'
-                                                                            .'</div>'
-                                                                            .'<div class="row">'
-                                                                                .'<div class="col-md-6 mb-3">'
-                                                                                .'<label class="form-label">Shift Allow</label>'
-                                                                                    .'<input type="number" step="0.01" name="shift_allow" class="form-control" value="'.htmlspecialchars($row['shift_allow'] ?? '0.00').'">'
-                                                                                .'</div>'
+                                                            <div class="row g-2 three-col-row">
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">End Time</label>
+                                                                    <input type="time" name="end_time" value="'.htmlspecialchars($row['e_time']).'" class="form-control">
+                                                                </div>
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">Breaks (minutes)</label>
+                                                                    <input type="number" name="breaks" value="'.htmlspecialchars($row['break']).'" class="form-control" min="0" step="1">
+                                                                </div>
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">Rate</label>
+                                                                    <input type="number" name="rate" value="'.htmlspecialchars($row['rate']).'" class="form-control" step="0.01" placeholder="0.00">
+                                                                </div>
+                                                            </div>
 
-                                                                                .'<div class="col-md-6 mb-3">'
-                                                                                .'<label class="form-label d-block">Holiday Shift</label>'
-                                                                                    .'<input type="checkbox" name="is_holi" class="form-check-input" value="1" '.(!empty($row['is_holi']) ? 'checked' : '').'>'
-                                                                                .'</div>'
-                                                                            .'</div>'
-                                                                        .'</div><div class="modal-footer"><button type="submit" class="btn btn-submit full">Update</button></div></form></div></div></div>';
+                                                            <div class="row g-2 three-col-row">
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">Laundry Allowance</label>
+                                                                    <input type="number" name="laundry" class="form-control shift-rate-field" step="0.01" placeholder="0.00">
+                                                                </div>
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">Uniform Allowance</label>
+                                                                    <input type="number" name="uniform" class="form-control shift-rate-field" step="0.01" placeholder="0.00">
+                                                                </div>
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">Shift Allow</label>
+                                                                    <input type="number" name="shift_allow" class="form-control" step="0.01" placeholder="0.00">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row g-2 three-col-row align-items-end">
+                                                                <div class="col-sm-4 mb-2">
+                                                                    <label class="form-label">Holiday Shift</label>
+                                                                    <div class="form-check holiday-field">
+                                                                        <input type="checkbox" name="is_holi" class="form-check-input" value="1">
+                                                                    </div>
+                                                               </div>
+                                                            </div>
+                                                        </div>'
+                                                                        .'<div class="modal-footer"><button type="submit" class="btn btn-submit full">Update</button></div></form></div></div></div>';
 
                                                                             $modals .= '<div class="modal fade" id="deleteShiftModal-'.htmlspecialchars($row['id']).'" tabindex="-1" aria-hidden="true">'
                                                                                 .'<div class="modal-dialog"><div class="modal-content">'
