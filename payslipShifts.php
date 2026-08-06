@@ -50,6 +50,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     AND shift_types.status = '1'
                     WHERE shift_records.user_code = '" . $_SESSION['user_code'] . "'
                     AND shift_records.status = '1'
+                    ORDER BY shift_records.date DESC, shift_records.s_time DESC
                     ");
 
 
@@ -367,10 +368,10 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                     <label class="form-label">Uniform Allowance</label>
                                                                         <input type="number" name="uniform" class="form-control shift-rate-field" step="0.01" placeholder="0.00">
                                                                     </div>
-                                                                    <div class="col-sm-4 mb-2">
+                                                                    <!-- <div class="col-sm-4 mb-2">
                                                                     <label class="form-label">Shift Allow</label>
                                                                         <input type="number" name="shift_allow" class="form-control" step="0.01" placeholder="0.00">
-                                                                    </div>
+                                                                    </div> -->
                                                                 </div>
                                                                 <div class="row mt-3">
                                                                     <div class="col-12 d-flex flex-column align-items-center">
@@ -407,7 +408,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                                         <th>Rate</th>
                                                         <th>Laundry</th>
                                                         <th>Uniform</th>
-                                                        <th>Shift Allow</th>
+                                                        <!-- <th>Shift Allow</th> -->
                                                         <th>Holiday</th>
                                                         <th>Operations</th>
                                                         </tr>
@@ -427,7 +428,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                     <td><?= '$'.htmlspecialchars($row['rate']) ?></td>
                                                                     <td><?= '$'.htmlspecialchars($row['l_allowance']) ?></td>
                                                                     <td><?= '$'.htmlspecialchars($row['u_allowance']) ?></td>
-                                                                    <td><?= '$'.htmlspecialchars($row['shift_allow'] ?? '0.00') ?></td>
+
                                                                     <td><?= '<input type="checkbox" ' . (!empty($row['is_holi']) ? 'checked' : '') . ' disabled>' ?></td>
                                                                         <td>
                                                                             <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editShiftModal-<?= $row['id'] ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
@@ -445,6 +446,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                         .'<div class="modal-header"><h5 class="modal-title">Edit Shift</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>'
                                                                             .'<form method="post" action="payslipUpdateShiftAction.php"><div class="modal-body shift-form-grid">
                                                                                 <div class="modal-body shift-form-grid">
+                                                                                    <input type="hidden" name="id" value="'.htmlspecialchars($row['id']).'">
                                                                                     <input type="hidden" name="user_code" value="'.htmlspecialchars($_SESSION['user_code']).'">
 
                                                                                     <div class="row g-2 three-col-row">
@@ -454,8 +456,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                                         </div>
                                                                                         <div class="col-sm-4 mb-2">
                                                                                         <label class="form-label">Shift Type</label>
-                                                                                            <select class="form-select shift-record-type-select" name="shift_type" value="'.htmlspecialchars($row['shift_type']).'" aria-label="Shift type">
-                                                                                                '.$renderShiftTypeOptions($shift_type_rows).'
+                                                                                            <select class="form-select shift-record-type-select" name="shift_type" aria-label="Shift type">
+                                                                                                '.$renderShiftTypeOptions($shift_type_rows, $row['shift_type'] ?? '').'
                                                                                             </select>
                                                                                         </div>
                                                                                         <div class="col-sm-4 mb-2">
@@ -482,15 +484,15 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                                     <div class="row g-2 three-col-row">
                                                                                         <div class="col-sm-4 mb-2">
                                                                                         <label class="form-label">Laundry Allowance</label>
-                                                                                            <input type="number" name="laundry" class="form-control shift-rate-field" step="0.01" placeholder="0.00">
+                                                                                            <input type="number" name="laundry" value="'.htmlspecialchars($row['l_allowance'] ?? '').'" class="form-control shift-rate-field" step="0.01" placeholder="0.00">
                                                                                         </div>
                                                                                         <div class="col-sm-4 mb-2">
                                                                                         <label class="form-label">Uniform Allowance</label>
-                                                                                            <input type="number" name="uniform" class="form-control shift-rate-field" step="0.01" placeholder="0.00">
+                                                                                            <input type="number" name="uniform" value="'.htmlspecialchars($row['u_allowance'] ?? '').'" class="form-control shift-rate-field" step="0.01" placeholder="0.00">
                                                                                         </div>
                                                                                         <div class="col-sm-4 mb-2">
                                                                                         <label class="form-label">Shift Allow</label>
-                                                                                            <input type="number" name="shift_allow" class="form-control" step="0.01" placeholder="0.00">
+                                                                                            <input type="number" name="shift_allow" value="'.htmlspecialchars($row['shift_allow'] ?? '').'" class="form-control" step="0.01" placeholder="0.00">
                                                                                         </div>
                                                                                     </div>
 
@@ -498,7 +500,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                                         <div class="col-12 d-flex flex-column align-items-center">
                                                                                         <label class="form-label">Holiday Shift</label>
                                                                                             <div class="form-check holiday-field">
-                                                                                                <input type="checkbox" name="is_holi" class="form-check-input" value="1">
+                                                                                                <input type="checkbox" name="is_holi" class="form-check-input" value="1" '.(!empty($row['is_holi']) ? 'checked' : '').'>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
