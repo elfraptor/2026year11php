@@ -64,8 +64,10 @@ if (session_status() === PHP_SESSION_NONE) {
 
                         /* Main page layout */
                         .payslip-left-sidebar {
-                            margin: 0 !important;
+                            margin: 0;
+                            display: flex;
                             align-items: stretch;
+                            gap: 0.1rem;
                         }
 
                         .payslip-shift-panel,
@@ -133,15 +135,32 @@ if (session_status() === PHP_SESSION_NONE) {
                         }
 
                         .table-container table {
-                            min-width: 1000px;
-                            white-space: nowrap;
+                            min-width: 100%;
+                            
+                            table-layout: fixed;
                         }
+                        .table-container th:nth-child(1),
+.table-container td:nth-child(1) { width: 6%; }  /* Shift Type */
+.table-container th:nth-child(2),
+.table-container td:nth-child(2) { width: 6%; }   /* Date */
+.table-container th:nth-child(3),
+.table-container td:nth-child(3) { width: 5%; }   /* Start */
+.table-container th:nth-child(4),
+.table-container td:nth-child(4) { width: 5%; }   /* End */
+.table-container th:nth-child(5),
+.table-container td:nth-child(5) { width: 6%; }   /* Breaks */
+.table-container th:nth-child(6),
+.table-container td:nth-child(6) { width: 5%; }   /* Rate */
+.table-container th:nth-child(7),
+.table-container td:nth-child(7) { width: 5%; }   /* Laundry */
+.table-container th:nth-child(8),
+.table-container td:nth-child(8) { width: 5%; }   /* Uniform */
+.table-container th:nth-child(9),
+.table-container td:nth-child(9) { width: 5%; }   /* Holiday */
+.table-container th:nth-child(10),
+.table-container td:nth-child(10) { width: 15%; } /* Operations */
 
-                        .table-container th,
-                        .table-container td {
-                            font-size: .85rem;
-                            padding: .4rem .5rem;
-                        }
+                        
 
                         /* Modals */
                         .modal .modal-body .form-label {
@@ -239,21 +258,21 @@ if (session_status() === PHP_SESSION_NONE) {
                             margin: 0;
                         }
                     </style>
-
-                    <div class="container-fluid p-4">
+</div>
+                    <div class="container-fluid px-2 py-3">
 
                         <!-- Page Title -->
                         <div class="mb-4">
-                        <h3>Enter Shifts Page</h3>
+                        
                         </div>
 
-                        <div class="card">
-                            <div class="card-body">
+                        <div class="card align-items-center justify-content-center">
+                            <div class="card-body align-items-center justify-content-center">
 
                                 <div class="row g-3 payslip-left-sidebar">
 
                                     <!-- LEFT SIDEBAR -->
-                                    <div class="col-12 col-lg-3 left-panel payslip-shift-panel">
+                                    <div class="col-8 col-lg-3 px-2 py-2 left-panel payslip-shift-panel">
 
                                         <div class="border rounded p-3 h-100">
 
@@ -405,37 +424,38 @@ if (session_status() === PHP_SESSION_NONE) {
 
                                                         <div class="col-4 mb-3">
                                                         <label class="form-label">Holiday</label>
-                                                            <input name="hol_allow"
+                                                            <input name="holi_loading"
                                                             class="form-control"
                                                             type="number"
                                                             step="0.01"
                                                             placeholder="0.00"
-                                                            aria-label="Holiday Allowance">
+                                                            aria-label="Holiday Loading">
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <!-- 2 columns -->
-                                                <div class="row">
-                                                    <div class="col-6 mb-3">
-                                                    <label class="form-label">Saturday</label>
-                                                        <input name="sat_allow"
-                                                        class="form-control"
-                                                        type="number"
-                                                        step="0.01"
-                                                        placeholder="0.00"
-                                                        aria-label="Saturday Allowance">
-                                                    </div>
 
-                                                    <div class="col-6 mb-3">
-                                                    <label class="form-label">Sunday</label>
-                                                        <input name="sun_allow"
-                                                        class="form-control"
-                                                        type="number"
-                                                        step="0.01"
-                                                        placeholder="0.00"
-                                                        aria-label="Sunday Allowance">
+                                                    <!-- 2 columns -->
+                                                    <div class="row">
+                                                        <div class="col-6 mb-3">
+                                                        <label class="form-label">Saturday Loading</label>
+                                                            <input name="sat_loading"
+                                                            class="form-control"
+                                                            type="number"
+                                                            step="0.01"
+                                                            placeholder="0.00"
+                                                            aria-label="Saturday Loading">
+                                                        </div>
+
+                                                        <div class="col-6 mb-3">
+                                                        <label class="form-label">Sunday Loading</label>
+                                                            <input name="sun_loading"
+                                                            class="form-control"
+                                                            type="number"
+                                                            step="0.01"
+                                                            placeholder="0.00"
+                                                            aria-label="Sunday Loading">
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                
 
                                                 <!-- 2 columns -->
                                                 <div class="row">
@@ -459,9 +479,9 @@ if (session_status() === PHP_SESSION_NONE) {
                                                         aria-label="Tax">
                                                     </div>
                                                 </div>
-
+</div>
                                             </div>
-                                        </div>
+                                        
                                         <div class="modal fade" id="saveShiftTypeModal" tabindex="-1" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -504,7 +524,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
                                 <!-- MAIN TABLE -->
 
-                                <div class="col-12 col-lg-9 payslip-table-panel">
+                                <div class="col-12 col-lg-8 px-2 py-2 payslip-table-panel">
 
                                     <div class="border rounded">
 
@@ -649,16 +669,16 @@ if (session_status() === PHP_SESSION_NONE) {
 
                                                 <thead class="table-light sticky-top">
                                                     <tr>
-                                                    <th>Shift Type</th>
+                                                    <th>Type</th>
                                                     <th>Date</th>
                                                     <th>Start</th>
                                                     <th>End</th>
-                                                    <th>Breaks</th>
+                                                    <th>Bre.</th>
                                                     <th>Rate</th>
-                                                    <th>Laundry</th>
-                                                    <th>Uniform</th>
+                                                    <th>Lau.</th>
+                                                    <th>Uni.</th>
                                                     <!-- <th>Shift Allow</th> -->
-                                                    <th>Holiday</th>
+                                                    <th>Hol.</th>
                                                     <th>Operations</th>
                                                     </tr>
                                                 </thead>
@@ -753,9 +773,10 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                                <button type="submit" class="btn btn-submit full">Update</button>
                                                                             </div>
                                                                         </div>'
-                                                                    .'<div class="modal-footer"><button type="submit" class="btn btn-submit full">Update</button></div></form></div></div></div>';
+                                                                    .'<div class="modal-footer"></div></form></div></div></div>';
 
                                                                         $modals .= '<div class="modal fade" id="deleteShiftModal-'.htmlspecialchars($row['id']).'" tabindex="-1" aria-hidden="true">'
                                                                             .'<div class="modal-dialog"><div class="modal-content">'
@@ -812,9 +833,9 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                 'l_allow',
                                                                 'u_allow',
                                                                 'pm_allow',
-                                                                'hol_allow',
-                                                                'sat_allow',
-                                                                'sun_allow',
+                                                                'holi_loading',
+                                                                'sat_loading',
+                                                                'sun_loading',
                                                                 'fringe',
                                                                 'tax'
                                                             ];
@@ -865,7 +886,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                                         });
                                                 })();
                                             </script>
-
+<div>
                                             <?php
                                             $conn->close();
                                             include_once "indexFooter.php"; ?>

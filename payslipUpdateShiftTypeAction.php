@@ -25,7 +25,7 @@ if (session_status() === PHP_SESSION_NONE) {
             $pm_allow = floatval(trim($_POST['pm_allow'] ?? 0));
             $sat_loading = floatval(trim($_POST['sat_loading'] ?? 0));
             $sun_loading = floatval(trim($_POST['sun_loading'] ?? 0));
-            $holi_loading = floatval(trim($_POST['holi_loading'] ?? 0));
+            $holi_loading = floatval(trim($_POST['holi_loading'] ?? $_POST['hol_loading'] ?? 0));
             $fringe = floatval(trim($_POST['fringe'] ?? 0));
             $tax = floatval(trim($_POST['tax'] ?? 0));
 
