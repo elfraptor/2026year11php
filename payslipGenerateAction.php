@@ -86,8 +86,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                     'sat_pay' => 0,
                                     'sun_pay' => 0,
                                     'holi_pay' => 0,
-                                    
-                                    
+
+
                                 ];
                             }
 
@@ -177,11 +177,11 @@ if (session_status() === PHP_SESSION_NONE) {
                                                 <td class="text-end">100%</td>
                                                 <td class="text-end"><?= number_format($data['pay'],2) ?></td>
                                                 </tr>
-<?php if ($data['laundry_pay'] > 0): ?>
+                                                <?php if ($data['laundry_pay'] > 0): ?>
                                                 <tr>
-                                                    
+
                                                     <td class="ps-1 text-muted">
-                                                    
+
                                                         Laundry Allowance
                                                     </td>
                                                 <td class="text-end"><?= $data['count'] ?></td>
@@ -190,49 +190,49 @@ if (session_status() === PHP_SESSION_NONE) {
                                                 <td class="text-end"><?= number_format($data['laundry_pay'],2) ?></td>
                                                 </tr>
                                                 <?php endif; ?>
-<?php if ($data['uniform_pay'] > 0): ?>
+                                                <?php if ($data['uniform_pay'] > 0): ?>
                                                 <tr>
-                                                    
+
                                                     <td class="ps-1 text-muted">
-                                                Uniform Allowance
+                                                        Uniform Allowance
                                                     </td>
                                                 <td class="text-end"><?= $data['count'] ?></td>
                                                 <td class="text-end"><?= number_format($data['uniform_loading'], 2)?></td>
                                                 <td class="text-end">100%</td>
                                                 <td class="text-end"><?= number_format($data['uniform_pay'],2) ?></td>
                                                 </tr>
-                                                    <?php endif; ?>
-                                          <tr>
-                                            <?php if ($data['fringe'] > 0): ?>
+                                                <?php endif; ?>
+                                                <tr>
+                                                    <?php if ($data['fringe'] > 0): ?>
                                                 <td class="ps-1 text-muted">Fringe Benefits</td>
                                                 <td class="text-end"><?= $data['count'] ?></td>
                                                 <td class="text-end"><?= number_format($data['fringe'] / max($data['count'],1),2) ?></td>
                                                 <td class="text-end">100%</td>
                                                 <td class="text-end"><?= number_format($data['fringe'],2) ?></td>
                                                 </tr>
-<?php endif; ?> <?php if ($data['sat_pay'] > 0): ?>
-    <td class="ps-1 text-muted">Saturday Loading</td>
-                                                <td class="text-end"><?= number_format($data['sat_hours'],2) ?></td>
-                                                <td class="text-end"><?= number_format($data['rate'],2) ?></td>
-                                                <td class="text-end"><?= number_format($data['sat_loading']*100,2) .'%'?></td>
-                                                <td class="text-end"><?= number_format($data['sat_pay'],2) ?></td>
+                                                <?php endif; ?> <?php if ($data['sat_pay'] > 0): ?>
+                                            <td class="ps-1 text-muted">Saturday Loading</td>
+                                            <td class="text-end"><?= number_format($data['sat_hours'],2) ?></td>
+                                            <td class="text-end"><?= number_format($data['rate'],2) ?></td>
+                                            <td class="text-end"><?= number_format($data['sat_loading']*100,2) .'%'?></td>
+                                            <td class="text-end"><?= number_format($data['sat_pay'],2) ?></td>
                                                 <?php endif; ?> <?php if ($data['sun_pay'] > 0): ?>
-                                                    <td class="ps-1 text-muted">Sunday Loading</td>
-                                                <td class="text-end"><?= number_format($data['sun_hours'],2) ?></td>
-                                                <td class="text-end"><?= number_format($data['rate'],2) ?></td>
-                                                <td class="text-end"><?= number_format($data['sun_loading']*100,2) .'%'?></td>
-                                                <td class="text-end"><?= number_format($data['sun_pay'],2) ?></td>
+                                            <td class="ps-1 text-muted">Sunday Loading</td>
+                                            <td class="text-end"><?= number_format($data['sun_hours'],2) ?></td>
+                                            <td class="text-end"><?= number_format($data['rate'],2) ?></td>
+                                            <td class="text-end"><?= number_format($data['sun_loading']*100,2) .'%'?></td>
+                                            <td class="text-end"><?= number_format($data['sun_pay'],2) ?></td>
                                                 <?php endif; ?> <?php if ($data['holi_pay'] > 0): ?>
-                                                    <td class="ps-1 text-muted">Public Holiday Loading</td>
-                                                <td class="text-end"><?= number_format($data['holi_hours'],2) ?></td>
-                                                <td class="text-end"><?= number_format($data['rate'],2) ?></td>
-                                                <td class="text-end"><?= number_format($data['holi_loading']*100,0) .'%'?></td>
-                                                <td class="text-end"><?= number_format($data['holi_pay'],2) ?></td>
+                                            <td class="ps-1 text-muted">Public Holiday Loading</td>
+                                            <td class="text-end"><?= number_format($data['holi_hours'],2) ?></td>
+                                            <td class="text-end"><?= number_format($data['rate'],2) ?></td>
+                                            <td class="text-end"><?= number_format($data['holi_loading']*100,0) .'%'?></td>
+                                            <td class="text-end"><?= number_format($data['holi_pay'],2) ?></td>
                                                 <?php endif; ?>
-                                            
 
 
-                                                
+
+
 
                                                 <tr>
                                                 <td class="ps-1 text-danger">Deductable</td>
@@ -263,8 +263,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                                         <?= number_format($payGroups[$type]['total'],2) ?>
                                                     </td>
                                                 </tr>
-                                                
-                                                
+
+
                                             </tr>
 
                                             <tr>

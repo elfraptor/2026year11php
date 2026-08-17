@@ -136,31 +136,31 @@ if (session_status() === PHP_SESSION_NONE) {
 
                         .table-container table {
                             min-width: 100%;
-                            
+
                             table-layout: fixed;
                         }
                         .table-container th:nth-child(1),
-.table-container td:nth-child(1) { width: 6%; }  /* Shift Type */
-.table-container th:nth-child(2),
-.table-container td:nth-child(2) { width: 6%; }   /* Date */
-.table-container th:nth-child(3),
-.table-container td:nth-child(3) { width: 5%; }   /* Start */
-.table-container th:nth-child(4),
-.table-container td:nth-child(4) { width: 5%; }   /* End */
-.table-container th:nth-child(5),
-.table-container td:nth-child(5) { width: 6%; }   /* Breaks */
-.table-container th:nth-child(6),
-.table-container td:nth-child(6) { width: 5%; }   /* Rate */
-.table-container th:nth-child(7),
-.table-container td:nth-child(7) { width: 5%; }   /* Laundry */
-.table-container th:nth-child(8),
-.table-container td:nth-child(8) { width: 5%; }   /* Uniform */
-.table-container th:nth-child(9),
-.table-container td:nth-child(9) { width: 5%; }   /* Holiday */
-.table-container th:nth-child(10),
-.table-container td:nth-child(10) { width: 15%; } /* Operations */
+                        .table-container td:nth-child(1) { width: 6%; }  /* Shift Type */
+                        .table-container th:nth-child(2),
+                        .table-container td:nth-child(2) { width: 6%; }   /* Date */
+                        .table-container th:nth-child(3),
+                        .table-container td:nth-child(3) { width: 5%; }   /* Start */
+                        .table-container th:nth-child(4),
+                        .table-container td:nth-child(4) { width: 5%; }   /* End */
+                        .table-container th:nth-child(5),
+                        .table-container td:nth-child(5) { width: 6%; }   /* Breaks */
+                        .table-container th:nth-child(6),
+                        .table-container td:nth-child(6) { width: 5%; }   /* Rate */
+                        .table-container th:nth-child(7),
+                        .table-container td:nth-child(7) { width: 5%; }   /* Laundry */
+                        .table-container th:nth-child(8),
+                        .table-container td:nth-child(8) { width: 5%; }   /* Uniform */
+                        .table-container th:nth-child(9),
+                        .table-container td:nth-child(9) { width: 5%; }   /* Holiday */
+                        .table-container th:nth-child(10),
+                        .table-container td:nth-child(10) { width: 15%; } /* Operations */
 
-                        
+
 
                         /* Modals */
                         .modal .modal-body .form-label {
@@ -237,6 +237,51 @@ if (session_status() === PHP_SESSION_NONE) {
                         .shift-form-grid .three-col-row > .col-sm-4 {
                             width: 100%;
                         }
+                        .row.g-2.col-row {
+                            width: 100%;
+                            
+                            
+                        }
+                        .shift-form-grid .col-row > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.shift-form-grid .col-row .form-label {
+    height: 1.25rem;
+    line-height: 1.25rem;
+    margin-bottom: .2rem;
+}
+
+.shift-form-grid .col-row .form-control,
+.shift-form-grid .col-row .form-select {
+    width: 100%;
+    height: 2.25rem;
+    min-height: 2.25rem;
+    box-sizing: border-box;
+    margin: 0;
+}
+                        f
+                        .shift-form-grid .col-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin: 0 0 .3rem 0;
+}
+
+.shift-form-grid .col-row > div {
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+}
+
+.shift-form-grid .col-row .form-control,
+.shift-form-grid .col-row .form-select {
+    width: 100%;
+}
+                        
 
                         .shift-form-grid .form-check,
                         .shift-form-grid .holiday-field {
@@ -257,205 +302,159 @@ if (session_status() === PHP_SESSION_NONE) {
                         .shift-form-grid .form-check-input {
                             margin: 0;
                         }
+                        .shift-form-grid .col-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: .5rem;
+    margin: 0 0 .3rem 0;
+}
+
+.shift-form-grid .col-row > div {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.shift-form-grid .col-row .form-label {
+    height: 1.25rem;
+    line-height: 1.25rem;
+    margin-bottom: .2rem;
+}
+
+.shift-form-grid .col-row .form-control,
+.shift-form-grid .col-row .form-select {
+    width: 100%;
+    height: 2.25rem;
+    min-height: 2.25rem;
+    box-sizing: border-box;
+    margin: 0;
+    padding: .35rem .55rem;
+    font-size: .92rem;
+    line-height: 1.5;
+}
                     </style>
-</div>
-                    <div class="container-fluid px-2 py-3">
+                </div>
+                <div class="container-fluid px-2 py-3">
 
-                        <!-- Page Title -->
-                        <div class="mb-4">
-                        
-                        </div>
+                    <!-- Page Title -->
+                    <div class="mb-4">
 
-                        <div class="card align-items-center justify-content-center">
-                            <div class="card-body align-items-center justify-content-center">
+                    </div>
 
-                                <div class="row g-3 payslip-left-sidebar">
+                    <div class="card align-items-center justify-content-center">
+                        <div class="card-body align-items-center justify-content-center">
 
-                                    <!-- LEFT SIDEBAR -->
-                                    <div class="col-8 col-lg-3 px-2 py-2 left-panel payslip-shift-panel">
+                            <div class="row g-3 payslip-left-sidebar">
 
-                                        <div class="border rounded p-3 h-100">
+                                <!-- LEFT SIDEBAR -->
+                                <div class="col-8 col-lg-3 px-2 py-2 left-panel payslip-shift-panel">
 
-                                        <h6 class="mb-3">Fixed Rates</h6>
+                                    <div class="border rounded p-3 h-100">
 
-                                            <div class="modal fade" id="createShiftTypeModal" tabindex="-1">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                        <h5 class="modal-title">Create Shift Type</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                        </div>
+                                    <h6 class="mb-3">Fixed Rates</h6>
 
-                                                        <form method="post" action="payslipCreateShiftType.php">
-                                                            <div class="modal-body">
-                                                                <input type="hidden" name="user_code" value="<?= htmlspecialchars($_SESSION['user_code']) ?>">
-
-                                                                <div class="mb-3">
-                                                                <label class="form-label">Shift Type Name</label>
-                                                                    <input class="form-control" type="text" name="shift_name" placeholder="Enter shift type name" aria-label="Shift Type Name">
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-6 mb-3">
-                                                                    <label class="form-label">Rate</label>
-                                                                        <input class="form-control" type="number" name="rate" step="0.01" placeholder="0.00" aria-label="Rate">
-                                                                    </div>
-                                                                    <div class="col-md-6 mb-3">
-                                                                    <label class="form-label">Deductable</label>
-                                                                        <input class="form-control" type="number" name="deductable" step="0.01" placeholder="0.00" aria-label="Deductable">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-6 mb-3">
-                                                                    <label class="form-label">Laundry Allowance</label>
-                                                                        <input class="form-control" name="l_allow" type="number" step="0.01" placeholder="0.00" aria-label="Laundry Allowance">
-                                                                    </div>
-
-                                                                    <div class="col-md-6 mb-3">
-                                                                    <label class="form-label">Uniform Allowance</label>
-                                                                        <input class="form-control" name="u_allow" type="number" step="0.01" placeholder="0.00" aria-label="Uniform Allowance">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="row">
-                                                                    <div class="col-md-6 mb-3">
-                                                                    <label class="form-label">Fringe</label>
-                                                                        <input class="form-control" name="fringe" type="number" step="0.01" placeholder="0.00" aria-label="Fringe">
-                                                                    </div>
-
-                                                                    <div class="col-md-6 mb-3">
-                                                                    <label class="form-label">Tax</label>
-                                                                        <input class="form-control" name="tax" type="number" step="0.01" placeholder="0.00" aria-label="Tax">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-submit full">Create Shift Type</button>
-                                                            </div>
-                                                        </form>
+                                        <div class="modal fade" id="createShiftTypeModal" tabindex="-1">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    <h5 class="modal-title">Create Shift Type</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                     </div>
-                                                </div>
-                                            </div>
 
-                                            <form id="shiftTypeForm" method="post" action="payslipUpdateShiftTypeAction.php">
+                                                    <form method="post" action="payslipCreateShiftType.php">
+                                                        <div class="modal-body">
+                                                            <input type="hidden" name="user_code" value="<?= htmlspecialchars($_SESSION['user_code']) ?>">
 
-                                                <input type="hidden" name="user_code" value="<?= htmlspecialchars($_SESSION['user_code']) ?>">
-                                                <input type="hidden" id="shiftTypeId" name="id" value="">
-                                                <div class="mb-3 d-flex justify-content-center">
-                                                    <div class="btn-group" role="group">
-                                                    <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#createShiftTypeModal">Create Type</button>
-                                                    <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#saveShiftTypeModal">Save Type</button>
-                                                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteShiftTypeModal">Delete Type</button>
+                                                            <div class="row">
+                                                    <div class="col-4 mb-3">
+                                                    <label class="form-label">Rate</label>
+                                                        <input name="rate"
+                                                        class="form-control"
+                                                        type="number"
+                                                        step="0.01"
+                                                        placeholder="0.00"
+                                                        aria-label="Rate">
+                                                    </div>
+
+                                                    <div class="col-4 mb-3">
+                                                    <label class="form-label">Deduct</label>
+                                                        <input name="deductable"
+                                                        class="form-control"
+                                                        type="number"
+                                                        step="0.01"
+                                                        placeholder="0.00"
+                                                        aria-label="Deductible">
+                                                    </div>
+
+                                                    <div class="col-4 mb-3">
+                                                    <label class="form-label">Lau.</label>
+                                                        <input name="l_allow"
+                                                        class="form-control"
+                                                        type="number"
+                                                        step="0.01"
+                                                        placeholder="0.00"
+                                                        aria-label="Laundry Allowance">
                                                     </div>
                                                 </div>
 
-                                                <div class="mb-3">
-                                                <label class="form-label">Shift Type</label>
-                                                    <select class="form-select" id="shiftTypeSelect" name="shift_type_id" aria-label="Shift type">
-                                                    <option value="">Select...</option>
-                                                        <?php foreach ($shift_type_rows as $row): ?>
-                                                        <option value="<?= htmlspecialchars($row['id']) ?>" <?= ((string)$selectedShiftTypeId === (string)$row['id']) ? 'selected' : '' ?>>
-                                                            <?= htmlspecialchars($row['name']) ?>
-                                                        </option>
-                                                        <?php endforeach; ?>
-                                                    </select>
+                                                <!-- 3 columns -->
+                                                <div class="row">
+                                                    <div class="col-4 mb-3">
+                                                    <label class="form-label">Uni.</label>
+                                                        <input name="u_allow"
+                                                        class="form-control"
+                                                        type="number"
+                                                        step="0.01"
+                                                        placeholder="0.00"
+                                                        aria-label="Uniform Allowance">
+                                                    </div>
+
+                                                    <div class="col-4 mb-3">
+                                                    <label class="form-label">PM</label>
+                                                        <input name="pm_allow"
+                                                        class="form-control"
+                                                        type="number"
+                                                        step="0.01"
+                                                        placeholder="0.00"
+                                                        aria-label="PM Allowance">
+                                                    </div>
+
+                                                    <div class="col-4 mb-3">
+                                                    <label class="form-label">Holiday</label>
+                                                        <input name="holi_loading"
+                                                        class="form-control"
+                                                        type="number"
+                                                        step="0.01"
+                                                        placeholder="0.00"
+                                                        aria-label="Holiday Loading">
+                                                    </div>
                                                 </div>
 
-                                                <div id="selectedShiftTypeFields">
-
-                                                    <input type="hidden"
-                                                    name="name"
-                                                    id="shiftTypeName">
-
-                                                    <!-- 3 columns -->
-                                                    <div class="row">
-                                                        <div class="col-4 mb-3">
-                                                        <label class="form-label">Rate</label>
-                                                            <input name="rate"
-                                                            class="form-control"
-                                                            type="number"
-                                                            step="0.01"
-                                                            placeholder="0.00"
-                                                            aria-label="Rate">
-                                                        </div>
-
-                                                        <div class="col-4 mb-3">
-                                                        <label class="form-label">Deduct</label>
-                                                            <input name="deductable"
-                                                            class="form-control"
-                                                            type="number"
-                                                            step="0.01"
-                                                            placeholder="0.00"
-                                                            aria-label="Deductible">
-                                                        </div>
-
-                                                        <div class="col-4 mb-3">
-                                                        <label class="form-label">Lau.</label>
-                                                            <input name="l_allow"
-                                                            class="form-control"
-                                                            type="number"
-                                                            step="0.01"
-                                                            placeholder="0.00"
-                                                            aria-label="Laundry Allowance">
-                                                        </div>
+                                                <!-- 2 columns -->
+                                                <div class="row">
+                                                    <div class="col-6 mb-3">
+                                                    <label class="form-label">Saturday Loading</label>
+                                                        <input name="sat_loading"
+                                                        class="form-control"
+                                                        type="number"
+                                                        step="0.01"
+                                                        placeholder="0.00"
+                                                        aria-label="Saturday Loading">
                                                     </div>
 
-                                                    <!-- 3 columns -->
-                                                    <div class="row">
-                                                        <div class="col-4 mb-3">
-                                                        <label class="form-label">Uni.</label>
-                                                            <input name="u_allow"
-                                                            class="form-control"
-                                                            type="number"
-                                                            step="0.01"
-                                                            placeholder="0.00"
-                                                            aria-label="Uniform Allowance">
-                                                        </div>
-
-                                                        <div class="col-4 mb-3">
-                                                        <label class="form-label">PM</label>
-                                                            <input name="pm_allow"
-                                                            class="form-control"
-                                                            type="number"
-                                                            step="0.01"
-                                                            placeholder="0.00"
-                                                            aria-label="PM Allowance">
-                                                        </div>
-
-                                                        <div class="col-4 mb-3">
-                                                        <label class="form-label">Holiday</label>
-                                                            <input name="holi_loading"
-                                                            class="form-control"
-                                                            type="number"
-                                                            step="0.01"
-                                                            placeholder="0.00"
-                                                            aria-label="Holiday Loading">
-                                                        </div>
+                                                    <div class="col-6 mb-3">
+                                                    <label class="form-label">Sunday Loading</label>
+                                                        <input name="sun_loading"
+                                                        class="form-control"
+                                                        type="number"
+                                                        step="0.01"
+                                                        placeholder="0.00"
+                                                        aria-label="Sunday Loading">
                                                     </div>
+                                                </div>
 
-                                                    <!-- 2 columns -->
-                                                    <div class="row">
-                                                        <div class="col-6 mb-3">
-                                                        <label class="form-label">Saturday Loading</label>
-                                                            <input name="sat_loading"
-                                                            class="form-control"
-                                                            type="number"
-                                                            step="0.01"
-                                                            placeholder="0.00"
-                                                            aria-label="Saturday Loading">
-                                                        </div>
-
-                                                        <div class="col-6 mb-3">
-                                                        <label class="form-label">Sunday Loading</label>
-                                                            <input name="sun_loading"
-                                                            class="form-control"
-                                                            type="number"
-                                                            step="0.01"
-                                                            placeholder="0.00"
-                                                            aria-label="Sunday Loading">
-                                                        </div>
-                                                    </div>
-                                                
 
                                                 <!-- 2 columns -->
                                                 <div class="row">
@@ -479,9 +478,161 @@ if (session_status() === PHP_SESSION_NONE) {
                                                         aria-label="Tax">
                                                     </div>
                                                 </div>
-</div>
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-submit full">Create Shift Type</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
-                                        
+                                        </div>
+
+                                        <form id="shiftTypeForm" method="post" action="payslipUpdateShiftTypeAction.php">
+
+                                            <input type="hidden" name="user_code" value="<?= htmlspecialchars($_SESSION['user_code']) ?>">
+                                            <input type="hidden" id="shiftTypeId" name="id" value="">
+                                            <div class="mb-3 d-flex justify-content-center">
+                                                <div class="btn-group" role="group">
+                                                <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#createShiftTypeModal">Create Type</button>
+                                                <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#saveShiftTypeModal">Save Type</button>
+                                                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteShiftTypeModal">Delete Type</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-3">
+                                            <label class="form-label">Shift Type</label>
+                                                <select class="form-select" id="shiftTypeSelect" name="shift_type_id" aria-label="Shift type">
+                                                <option value="">Select...</option>
+                                                    <?php foreach ($shift_type_rows as $row): ?>
+                                                    <option value="<?= htmlspecialchars($row['id']) ?>" <?= ((string)$selectedShiftTypeId === (string)$row['id']) ? 'selected' : '' ?>>
+                                                        <?= htmlspecialchars($row['name']) ?>
+                                                    </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+
+                                            <div id="selectedShiftTypeFields">
+
+                                                <input type="hidden"
+                                                name="name"
+                                                id="shiftTypeName">
+
+                                                <!-- 3 columns -->
+                                                <div class="row">
+                                                    <div class="col-4 mb-3">
+                                                    <label class="form-label">Rate</label>
+                                                        <input name="rate"
+                                                        class="form-control"
+                                                        type="number"
+                                                        step="0.01"
+                                                        placeholder="0.00"
+                                                        aria-label="Rate">
+                                                    </div>
+
+                                                    <div class="col-4 mb-3">
+                                                    <label class="form-label">Deduct</label>
+                                                        <input name="deductable"
+                                                        class="form-control"
+                                                        type="number"
+                                                        step="0.01"
+                                                        placeholder="0.00"
+                                                        aria-label="Deductible">
+                                                    </div>
+
+                                                    <div class="col-4 mb-3">
+                                                    <label class="form-label">Lau.</label>
+                                                        <input name="l_allow"
+                                                        class="form-control"
+                                                        type="number"
+                                                        step="0.01"
+                                                        placeholder="0.00"
+                                                        aria-label="Laundry Allowance">
+                                                    </div>
+                                                </div>
+
+                                                <!-- 3 columns -->
+                                                <div class="row">
+                                                    <div class="col-4 mb-3">
+                                                    <label class="form-label">Uni.</label>
+                                                        <input name="u_allow"
+                                                        class="form-control"
+                                                        type="number"
+                                                        step="0.01"
+                                                        placeholder="0.00"
+                                                        aria-label="Uniform Allowance">
+                                                    </div>
+
+                                                    <div class="col-4 mb-3">
+                                                    <label class="form-label">PM</label>
+                                                        <input name="pm_allow"
+                                                        class="form-control"
+                                                        type="number"
+                                                        step="0.01"
+                                                        placeholder="0.00"
+                                                        aria-label="PM Allowance">
+                                                    </div>
+
+                                                    <div class="col-4 mb-3">
+                                                    <label class="form-label">Holiday</label>
+                                                        <input name="holi_loading"
+                                                        class="form-control"
+                                                        type="number"
+                                                        step="0.01"
+                                                        placeholder="0.00"
+                                                        aria-label="Holiday Loading">
+                                                    </div>
+                                                </div>
+
+                                                <!-- 2 columns -->
+                                                <div class="row">
+                                                    <div class="col-6 mb-3">
+                                                    <label class="form-label">Saturday Loading</label>
+                                                        <input name="sat_loading"
+                                                        class="form-control"
+                                                        type="number"
+                                                        step="0.01"
+                                                        placeholder="0.00"
+                                                        aria-label="Saturday Loading">
+                                                    </div>
+
+                                                    <div class="col-6 mb-3">
+                                                    <label class="form-label">Sunday Loading</label>
+                                                        <input name="sun_loading"
+                                                        class="form-control"
+                                                        type="number"
+                                                        step="0.01"
+                                                        placeholder="0.00"
+                                                        aria-label="Sunday Loading">
+                                                    </div>
+                                                </div>
+
+
+                                                <!-- 2 columns -->
+                                                <div class="row">
+                                                    <div class="col-6 mb-3">
+                                                    <label class="form-label">Fringe</label>
+                                                        <input name="fringe"
+                                                        class="form-control"
+                                                        type="number"
+                                                        step="0.01"
+                                                        placeholder="0.00"
+                                                        aria-label="Fringe">
+                                                    </div>
+
+                                                    <div class="col-6 mb-3">
+                                                    <label class="form-label">Tax</label>
+                                                        <input name="tax"
+                                                        class="form-control"
+                                                        type="number"
+                                                        step="0.01"
+                                                        placeholder="0.00"
+                                                        aria-label="Tax">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="modal fade" id="saveShiftTypeModal" tabindex="-1" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -595,24 +746,25 @@ if (session_status() === PHP_SESSION_NONE) {
                                                         <div class="modal-body shift-form-grid">
                                                             <input type="hidden" name="user_code" value="<?= htmlspecialchars($_SESSION['user_code']) ?>">
 
-                                                            <div class="row g-2 three-col-row">
-                                                                <div class="col-sm-4 mb-2">
+                                                            <div class="col-row">
+                                                                <div class="col-sm-6">
                                                                 <label class="form-label">Date</label>
                                                                     <input type="date" name="date" class="form-control">
                                                                 </div>
-                                                                <div class="col-sm-4 mb-2">
+                                                                <div class="col-sm-6">
                                                                 <label class="form-label">Shift Type</label>
-                                                                    <select class="form-select shift-record-type-select" name="shift_type" aria-label="Shift type">
+                                                                    <select class="form-select" name="shift_type" aria-label="Shift type">
                                                                         <?= $renderShiftTypeOptions($shift_type_rows) ?>
                                                                     </select>
                                                                 </div>
+                                                                
+                                                            </div>
+
+                                                            <div class="row g-2 three-col-row">
                                                                 <div class="col-sm-4 mb-2">
                                                                 <label class="form-label">Start Time</label>
                                                                     <input type="time" name="start_time" class="form-control">
                                                                 </div>
-                                                            </div>
-
-                                                            <div class="row g-2 three-col-row">
                                                                 <div class="col-sm-4 mb-2">
                                                                 <label class="form-label">End Time</label>
                                                                     <input type="time" name="end_time" class="form-control">
@@ -621,10 +773,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                 <label class="form-label">Breaks (minutes)</label>
                                                                     <input type="number" name="breaks" class="form-control" min="0" step="1">
                                                                 </div>
-                                                                <div class="col-sm-4 mb-2">
-                                                                <label class="form-label">Rate</label>
-                                                                    <input type="number" name="rate" class="form-control" step="0.01" placeholder="0.00">
-                                                                </div>
+                                                                
                                                             </div>
 
                                                             <div class="row g-2 three-col-row">
@@ -636,10 +785,10 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                 <label class="form-label">Uniform Allowance</label>
                                                                     <input type="number" name="uniform" class="form-control shift-rate-field" step="0.01" placeholder="0.00">
                                                                 </div>
-                                                                <!-- <div class="col-sm-4 mb-2">
-                                                                <label class="form-label">Shift Allow</label>
-                                                                    <input type="number" name="shift_allow" class="form-control" step="0.01" placeholder="0.00">
-                                                                </div> -->
+                                                                <div class="col-sm-4 mb-2">
+                                                                <label class="form-label">Rate</label>
+                                                                    <input type="number" name="rate" class="form-control" step="0.01" placeholder="0.00">
+                                                                </div>
                                                             </div>
                                                             <div class="row mt-3">
                                                                 <div class="col-12 d-flex flex-column align-items-center">
@@ -773,7 +922,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <button type="submit" class="btn btn-submit full">Update</button>
+                                                                            <button type="submit" class="btn btn-submit full">Update</button>
                                                                             </div>
                                                                         </div>'
                                                                     .'<div class="modal-footer"></div></form></div></div></div>';
@@ -886,7 +1035,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                                         });
                                                 })();
                                             </script>
-<div>
-                                            <?php
-                                            $conn->close();
-                                            include_once "indexFooter.php"; ?>
+                                            <div>
+                                                <?php
+                                                $conn->close();
+                                                include_once "indexFooter.php"; ?>
