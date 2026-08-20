@@ -47,15 +47,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     $shiftLoading = (float)($shift['shift_allow'] ?? 0);
 
                     $weekday = (int)date('N', strtotime($shift['date']));
-                    $dayLoading = (float)($shift['pm_allow'] ?? 0);
-
-                    if (!empty($shift['is_holi'])) {
-                            $dayLoading = (float)($shift['holi_loading'] ?? $dayLoading);
-                        } elseif ($weekday == 6) {
-                            $dayLoading = (float)($shift['sat_loading'] ?? $dayLoading);
-                        } elseif ($weekday == 7) {
-                            $dayLoading = (float)($shift['sun_loading'] ?? $dayLoading);
-                        }
+                 
 
                         $recordLoading = $shiftLoading;
                         $recordDeductable = (float)$shift['type_deductable'];
@@ -101,9 +93,9 @@ if (session_status() === PHP_SESSION_NONE) {
                             $payGroups[$group]['sat_hours'] += ($weekday == 6) ? $hours : 0;
                             $payGroups[$group]['sun_hours'] += ($weekday == 7) ? $hours : 0;
                             $payGroups[$group]['holi_hours'] += (!empty($shift['is_holi'])) ? $hours : 0;
-                            $payGroups[$group]['sat_pay'] += ($weekday == 6) ? $payGroups[$group]['sat_loading'] * $hours : 0;
-                            $payGroups[$group]['sun_pay'] += ($weekday == 7) ? $payGroups[$group]['sun_loading'] * $hours : 0;
-                            $payGroups[$group]['holi_pay'] += (!empty($shift['is_holi'])) ? $payGroups[$group]['holi_loading'] * $hours : 0;
+                            $payGroups[$group]['sat_pay'] += ($weekday == 6) ? $rate * ($payGroups[$group]['sat_loading']/100) * $hours : 0;
+                            $payGroups[$group]['sun_pay'] += ($weekday == 7) ? $rate * ($payGroups[$group]['sun_loading']/100) * $hours : 0;
+                            $payGroups[$group]['holi_pay'] += (!empty($shift['is_holi'])) ? $rate * ($payGroups[$group]['holi_loading']/100) * $hours : 0;
                             $payGroups[$group]['tax'] += $recordTax;
                             $payGroups[$group]['total'] = $payGroups[$group]['pay'] + $payGroups[$group]['sat_pay'] + $payGroups[$group]['sun_pay'] + $payGroups[$group]['holi_pay'] + $payGroups[$group]['laundry_pay'] + $payGroups[$group]['uniform_pay'] + $payGroups[$group]['fringe'] - $payGroups[$group]['deductable'] - $payGroups[$group]['tax'];
                             // Totals
@@ -184,7 +176,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
                                                         Laundry Allowance
                                                     </td>
-                                                <td class="text-end"><?= $data['count'] ?></td>
+                                                <td class="text-end"><?= number_format($data['hours'],2) ?></td>
                                                 <td class="text-end"><?= number_format($data['laundry_loading'],2) ?></td>
                                                 <td class="text-end">100%</td>
                                                 <td class="text-end"><?= number_format($data['laundry_pay'],2) ?></td>
@@ -196,7 +188,7 @@ if (session_status() === PHP_SESSION_NONE) {
                                                     <td class="ps-1 text-muted">
                                                         Uniform Allowance
                                                     </td>
-                                                <td class="text-end"><?= $data['count'] ?></td>
+                                                <td class="text-end"><?= number_format($data['hours'],2) ?></td>
                                                 <td class="text-end"><?= number_format($data['uniform_loading'], 2)?></td>
                                                 <td class="text-end">100%</td>
                                                 <td class="text-end"><?= number_format($data['uniform_pay'],2) ?></td>
@@ -205,55 +197,55 @@ if (session_status() === PHP_SESSION_NONE) {
                                                 <tr>
                                                     <?php if ($data['fringe'] > 0): ?>
                                                 <td class="ps-1 text-muted">Fringe Benefits</td>
-                                                <td class="text-end"><?= $data['count'] ?></td>
-                                                <td class="text-end"><?= number_format($data['fringe'] / max($data['count'],1),2) ?></td>
+                                                <td class="text-end"><?= number_format($data['hours'],2) ?></td>
+                                                <td class="text-end"><?= number_format($data['fringe'] / max($data['hours'],1),2) ?></td>
                                                 <td class="text-end">100%</td>
                                                 <td class="text-end"><?= number_format($data['fringe'],2) ?></td>
                                                 </tr>
                                                 <?php endif; ?> <?php if ($data['sat_pay'] > 0): ?>
                                             <td class="ps-1 text-muted">Saturday Loading</td>
                                             <td class="text-end"><?= number_format($data['sat_hours'],2) ?></td>
-                                            <td class="text-end"><?= number_format($data['rate'],2) ?></td>
-                                            <td class="text-end"><?= number_format($data['sat_loading']*100,2) .'%'?></td>
+                                            <td class="text-end"><?= number_format($data['rate']*($data['sat_loading']/100),0) ?></td>
+                                            <td class="text-end"><?= number_format($data['sat_loading'],2) .'%'?></td>
                                             <td class="text-end"><?= number_format($data['sat_pay'],2) ?></td>
                                                 <?php endif; ?> <?php if ($data['sun_pay'] > 0): ?>
                                             <td class="ps-1 text-muted">Sunday Loading</td>
                                             <td class="text-end"><?= number_format($data['sun_hours'],2) ?></td>
-                                            <td class="text-end"><?= number_format($data['rate'],2) ?></td>
-                                            <td class="text-end"><?= number_format($data['sun_loading']*100,2) .'%'?></td>
+                                            <td class="text-end"><?= number_format($data['rate']*($data['sun_loading']/100),2) ?></td>
+                                            <td class="text-end"><?= number_format($data['sun_loading'],0) .'%'?></td>
                                             <td class="text-end"><?= number_format($data['sun_pay'],2) ?></td>
                                                 <?php endif; ?> <?php if ($data['holi_pay'] > 0): ?>
                                             <td class="ps-1 text-muted">Public Holiday Loading</td>
                                             <td class="text-end"><?= number_format($data['holi_hours'],2) ?></td>
-                                            <td class="text-end"><?= number_format($data['rate'],2) ?></td>
-                                            <td class="text-end"><?= number_format($data['holi_loading']*100,0) .'%'?></td>
+                                            <td class="text-end"><?= number_format($data['rate']*($data['holi_loading']/100),2) ?></td>
+                                            <td class="text-end"><?= number_format($data['holi_loading'],0) .'%'?></td>
                                             <td class="text-end"><?= number_format($data['holi_pay'],2) ?></td>
                                                 <?php endif; ?>
 
 
 
 
-
+<?php if ($data['deductable'] > 0): ?>
                                                 <tr>
                                                 <td class="ps-1 text-danger">Deductable</td>
-                                                <td class="text-end"><?= $data['count'] ?></td>
-                                                <td class="text-end"><?= number_format($data['deductable'] / max($data['count'],1),2) ?></td>
+                                                <td class="text-end"><?= number_format($data['hours'],2) ?></td>
+                                                <td class="text-end"><?= number_format($data['deductable'] / max($data['hours'],1),2) ?></td>
                                                 <td class="text-end">100%</td>
                                                     <td class="text-end text-danger">
                                                         -<?= number_format($data['deductable'],2) ?>
                                                     </td>
                                                 </tr>
-
+<?php endif; ?> <?php if ($data['tax'] > 0): ?>
                                                 <tr>
                                                 <td class="ps-1 text-danger">Income Tax</td>
-                                                <td class="text-end"><?= $data['count'] ?></td>
-                                                <td class="text-end"><?= number_format($data['tax'] / max($data['count'],1),2) ?></td>
+                                                <td class="text-end"><?= number_format($data['hours'],2) ?></td>
+                                                <td class="text-end"><?= number_format($data['tax'] / max($data['hours'],1),2) ?></td>
                                                 <td class="text-end">100%</td>
                                                     <td class="text-end text-danger">
                                                         -<?= number_format($data['tax'],2) ?>
                                                     </td>
                                                 </tr>
-
+<?php endif; ?>
                                                 <tr class="border-top border-2">
                                                     <td colspan="4" class="text-end fw-bold">
                                                         Subtotal for <?= htmlspecialchars($type) ?>
