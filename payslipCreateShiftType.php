@@ -14,8 +14,25 @@ if (session_status() === PHP_SESSION_NONE) {
     <h1>Title</h1>
     </html>
     <?php
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+      header('Location: payslipShifts.php');
+      exit;
+    }
+
     $user_code= trim($_POST['user_code']);
-    $name = trim($_POST['shift_name']);
+    $name = trim($_POST['shift_name'] ?? '');
+
+    if ($name === '') {
+      echo "Shift Type Name is required.";
+      ?>
+      <br>
+      <br>
+      <a href="payslipShifts.php" class="btn btn-secondary">Back to shifts</a>
+      <?php
+      include_once "indexFooter.php";
+      exit;
+    }
+
     $rate = floatval(trim($_POST['rate']));
     $deductable = floatval(trim($_POST['deductable']));
     $l_allow = floatval(trim($_POST['l_allow']));

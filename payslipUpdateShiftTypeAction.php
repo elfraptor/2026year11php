@@ -29,6 +29,16 @@ if (session_status() === PHP_SESSION_NONE) {
             $fringe = floatval(trim($_POST['fringe'] ?? 0));
             $tax = floatval(trim($_POST['tax'] ?? 0));
 
+            if ($name === '') {
+                    echo "Shift Type Name is required.";
+                    ?>
+                    <br>
+                <a href="payslipShifts.php" class="btn btn-secondary">Back to shifts</a>
+                    <?php
+                    include_once "indexFooter.php";
+                    exit;
+                }
+
             $conn = mysqli_connect("localhost", "root", "", "yr11_test_db");
 
             if (!$conn) {

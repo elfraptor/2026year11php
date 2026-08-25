@@ -382,6 +382,17 @@ if (session_status() === PHP_SESSION_NONE) {
                                                     <div class="modal-body">
                                                         <input type="hidden" name="user_code" value="<?= htmlspecialchars($_SESSION['user_code']) ?>">
 
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Shift Type Name</label>
+                                                            <input name="shift_name"
+                                                            class="form-control"
+                                                            type="text"
+                                                            maxlength="100"
+                                                            placeholder="e.g. Weekday Full Time"
+                                                            aria-label="Shift Type Name"
+                                                            required>
+                                                        </div>
+
                                                         <div class="row">
                                                             <div class="col-4 mb-3">
                                                             <label class="form-label">Rate</label>
@@ -531,9 +542,16 @@ if (session_status() === PHP_SESSION_NONE) {
 
                                         <div id="selectedShiftTypeFields">
 
-                                            <input type="hidden"
-                                            name="name"
-                                            id="shiftTypeName">
+                                            <div class="mb-3">
+                                            <label class="form-label">Shift Type Name</label>
+                                                <input name="name"
+                                                id="shiftTypeName"
+                                                class="form-control"
+                                                type="text"
+                                                maxlength="100"
+                                                aria-label="Shift Type Name"
+                                                required>
+                                            </div>
 
                                             <!-- 3 columns -->
                                             <div class="row">
