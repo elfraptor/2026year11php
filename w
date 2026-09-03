@@ -68,7 +68,7 @@ Date:   Thu May 7 19:43:42 2026 +1000
 Author: Eliot <FIT0001@students.nossalhs.vic.edu.au>
 Date:   Thu May 7 19:11:21 2026 +1000
 
-    seperated into action and main proccess
+    separated into action and main proccess
 
 [33mcommit 857f7b778aa0b72875faf72ef8a236877fdee4c8[m
 Author: Eliot <FIT0001@students.nossalhs.vic.edu.au>
